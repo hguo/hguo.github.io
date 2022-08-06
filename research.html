@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hanqi Guo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F527RLQW8Z"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-F527RLQW8Z');
+    </script>
+    
+  </head>
+
+  <body>
+    
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Hanqi Guo</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li class="active"><a href="research.html">Research</a></li>
+            <li><a href="teaching.html">Teaching</a></li>
+            <li><a href="software.html">Software</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class='row'>
+
+        <div class="col-md-9">  
+          <h3 id="ftk">Feature extraction and tracking</h3>
+          <p>Feature tracking is a core topic in scientific visualization for  understanding dynamic behaviors in time-varying simulation and experimental data.  By tracking features such as extrema, vortex cores, and boundary surfaces, one can highlight key regions in visualization, reduce data to store, and enable further analysis based on the dynamics of features in scientific data.</p>
+
+          <p>We have developed a general framework, namely <a href="https://github.com/hguo/ftk">FTK</a>, that delivers a collection of feature-tracking tools to end users, scales feature-tracking algorithms in distributed and parallel environments, and simplifies the development of new feature-tracking algorithms.  We applied FTK to various applications including fusion energy sciences, superconductivity, and high-speed imaging experiments.</p>
+
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, David Lenz, Jiayi Xu, Xin Liang, Wenbin He, Iulian R. Grindeanu, Han-Wei Shen, Tom Peterka, Todd Munson, and Ian Foster<br>
+            FTK: A Simplicial Spacetime Meshing Framework for Robust and Scalable Feature Tracking<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 2021. (In Preprint)<br> 
+            | <a href="http://doi.org/10.1109/TVCG.2021.3073399">DOI</a>  
+            | <a href="https://arxiv.org/abs/2011.08697">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jiayi Xu, <b>Hanqi Guo</b>, Han-Wei Shen, Mukund Raj, Xueqiao Xu, Xueyun Wang, Zhehui Wang, and Tom Peterka<br>
+            Asynchronous and Load-Balanced Union-Find for Distributed and Parallel Scientific Data Visualization and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE PacificVis 2021)</em>, 2021. (Accepted)<br> 
+            | DOI 
+            | <a href="https://arxiv.org/abs/2003.02351">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Zhehui Wang, Jiayi Xu, Yao E. Kovach, Bradley T. Wolfe, Edward Thomas Jr., <b>Hanqi Guo</b>, John E. Foster, and Han-Wei Shen<br>
+            Microparticle cloud imaging and tracking for data-driven plasma science<br>
+            Physics of Plasmas, AIP Publishing, 27(3):033703, 2020.<br>
+            | <a href="https://doi.org/10.1063/1.5134787">DOI</a>  
+            | <a href="https://arxiv.org/abs/1911.01000">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Martin Imre, Jun Han, Julien Dominski, Michael Churchill, Ralph Kube, Choong-Seock Chang, Tom Peterka, <b>Hanqi Guo</b>, and Chaoli Wang<br>
+            ContourNet: Salient Local Contour Identification for Blob Detection in Plasma Fusion Simulation Data<br>
+            In <em>ISVC'19: Proceedings of International Symposium on Visual Computing</em>, pages 289-301, Lake Tahoe, NV, 2019.<br>
+            | <a href="https://doi.org/10.1007/978-3-030-33720-9_22">DOI</a> 
+            | PDF 
+            | <a href="https://github.com/mimre25/ContourNet">GitHub</a> 
+            | <a href="https://www.anl.gov/mcs/article/using-artificial-intelligence-to-detect-blobs">Press Release</a> |</div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Carolyn L. Phillps, Tom Peterka, Dmitry Karpeyev, and Andreas Glatz<br>
+            Extracting, Tracking, and Visualizing Magnetic Flux Vortices in 3D Complex-Valued Superconductor Simulation Data<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '15)</em>, 22(1):827-836, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2015.2466838">DOI</a> 
+            | <a href="publications/GuoPPKG15.pdf">PDF (3.8 MB)</a> 
+            | <a href="publications/GuoPPKG15.mp4">Video (11 MB)</a> 
+            | <a href="https://vimeo.com/groups/vis2015previews/videos/136542098">Video Preview</a> 
+            | <a href="https://github.com/hguo/vortexfinder2">Github</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Carolyn L. Phillips, <b>Hanqi Guo</b>, Tom Peterka, Dmitry Karpeyev, and Andreas Glatz<br>
+            Tracking Vortices in Superconductors: Extracting Singularities from a Discretized Complex Scalar Field Evolving in Time<br>
+            <em>Physical Reivew E</em>, 93(023305), 2016.<br>
+            | <a href="http://dx.doi.org/10.1103/PhysRevE.93.023305">DOI</a> | PDF |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+
+          <h3 id="ai">AI, machine learning, and deep learning</h3>
+          <p>As scientists anticipate the benefits of exascale computing, the lack of novel solutions to process data at scale and calibrate the simulation parameters has become a significant roadblock to further accelerating scientific discovery.  The goal of our NSF project on deep learning for visualization is to develop a new end-to-end data analysis and feature extraction workflow based on deep neural networks to help computational scientists address three major challenges: (1) identify important simulation parameters and generate the essential data for analysis, (2) transform the simulation data to compact feature representations to convey the most insight, and (3) design scalable visualization algorithms coupled with large-scale simulations to glean insight into their scientific problems. Working with domain scientists in jet engine design, climate models, cardio/cerebrovascular flow, superconductivity, and fusion energy, the team will demonstrate how deep learning techniques can help extract features from vast amounts of simulation data and navigate in the huge simulation parameter space. Through summer internships and project collaborations, this research will create opportunities for graduate and undergraduate students, including students from underrepresented groups, to participate in key research initiatives with leading scientists. Through the planned annual summer school on "Deep Learning for Visualization," the research results will enable visualization researchers and a broader community to incorporate the principles and practice of deep learning techniques developed.</p>
+
+          <ul>
+            <li><p><div align="left">Wenbin He, Junpeng Wang, <b>Hanqi Guo</b>, Ko-Chih Wang, Han-Wei Shen, Mukund Raj, Youssef S. G. Nashed, and Tom Peterka<br>
+            InSituNet: Deep Image Synthesis for Parameter Space Exploration of Ensemble Simulations<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2019)</em>, 26(1):23-33, 2020. (<b>Best Paper Award</b>)<br>
+            | <a href="https://doi.org/10.1109/TVCG.2019.2934312">DOI</a> 
+            | <a href="https://arxiv.org/abs/1908.00407">arXiv</a> 
+            | <a href="publications/HeWGWSRNP19.pdf">PDF (7.5 MB)</a> 
+            | <a href="https://www.anl.gov/mcs/article/researchers-win-best-paper-award-at-visualization-conference">Press Release</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jun Han, Jun Tao, Hao Zheng, <b>Hanqi Guo</b>, Danny Z. Chen, and Chaoli Wang<br>
+            Flow Field Reduction via Reconstructing Vector Data from 3D Streamlines Using Deep Learning<br>
+            <em>IEEE Computer Graphics and Applications, Special Issue on Visual Computing with Deep Learning</em>, 39(4):54-67, 2019.<br>
+            | <a href="https://doi.org/10.1109/MCG.2018.2881523">DOI</a> 
+            | <a href="publications/HanTGCW19.pdf">PDF</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Wenbin He, Junpeng Wang, <b>Hanqi Guo</b>, Han-Wei Shen, and Tom Peterka<br>
+            CECAV: Collective Ensemble Comparison and Visualization using Deep Neural Networks<br>
+            <em>Journal of Visual Informatics</em>, 4(2):109--121, 2020.<br>
+            | <a href="https://doi.org/10.1016/j.visinf.2020.04.004">DOI</a> 
+            | PDF |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+
+
+          <h3 id="parallel">Parallel and in situ visualization</h3>
+          <p>TBA</p>
+
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, David Lenz, Jiayi Xu, Xin Liang, Wenbin He, Iulian R. Grindeanu, Han-Wei Shen, Tom Peterka, Todd Munson, and Ian Foster<br>
+            FTK: A Simplicial Spacetime Meshing Framework for Robust and Scalable Feature Tracking<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 2021. (In Preprint)<br> 
+            | <a href="http://doi.org/10.1109/TVCG.2021.3073399">DOI</a>  
+            | <a href="https://arxiv.org/abs/2011.08697">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jiayi Xu, <b>Hanqi Guo</b>, Han-Wei Shen, Mukund Raj, Xueqiao Xu, Xueyun Wang, Zhehui Wang, and Tom Peterka<br>
+            Asynchronous and Load-Balanced Union-Find for Distributed and Parallel Scientific Data Visualization and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE PacificVis 2021)</em>, 2021. (Accepted)<br> 
+            | DOI 
+            | <a href="https://arxiv.org/abs/2003.02351">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Wenbin He, Sangmin Seo, Han-Wei Shen, Emil Mihai Constantinescu, Chunhui Liu, and Tom Peterka<br>
+            Extreme-Scale Stochastic Particle Tracing for Uncertain Unsteady Flow Visualization and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 25(9):2710-2724, 2019.<br>
+            | <a href="http://doi.org/10.1109/TVCG.2018.2856772">DOI</a> 
+            | <a href="publications/GuoHSSCLP18-small.pdf">PDF (1.8 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jiang Zhang, <b>Hanqi Guo</b>, Fan Hong, Xiaoru Yuan, and Tom Peterka<br>
+            Dynamic Load Balancing Based on Constrained K-D Tree Decomposition for Parallel Particle Tracing<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '17)</em>, 24(1):954-963, 2018.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2017.2744059">DOI</a>
+            | <a href="publications/ZhangGHXP17.pdf">PDF (3.5 MB)</a>
+            | <a href="https://vimeo.com/230835488">Video Preview</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Wenbin He, <b>Hanqi Guo</b>, Tom Peterka, Sheng Di, Franck Cappello, and Han-Wei Shen<br>
+            Parallel Partial Reduction for Large-Scale Data Analysis and Visualization<br>
+            In <em>LDAV'18: Proceedings of IEEE Symposium on Large Data Analysis and Visualization</em>, pages 45-55, 2018. (<b>Honorable Mention Award</b>)<br>
+            | <a href="https://doi.org/10.1109/LDAV.2018.8739165">DOI</a> 
+            | <a href="publications/HeGPDCS18.pdf">PDF</a> 
+            | <a href="https://vimeo.com/304980361">Presentation</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Xiaoru Yuan, Jian Huang, and Xiaomin Zhu<br>
+            Coupled Ensemble Flow Line Advection and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '13)</em>, 19(12):2733-2742, 2013.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2013.144">DOI</a> 
+            | <a href="publications/GuoYHZ13-small.pdf">PDF (633 KB) </a> 
+            | <a href="publications/GuoYHZ13-small.mp4">Video (8.2 MB) </a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jiang Zhang, <b>Hanqi Guo</b>, Xiaoru Yuan, and Tom Peterka<br>
+            Dynamic Data Repartitioning for Load-Balanced Parallel Particle Tracing<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '18)</em>, pages 86-95, Kobe, Japan, April 10-13, 2018.<br>
+            | <a href="https://doi.org/10.1109/PacificVis.2018.00019">DOI</a>
+            | <a href="publications/ZhangGYP18.pdf">PDF (4.0 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jiang Zhang, <b>Hanqi Guo</b>, and Xiaoru Yuan<br>
+            Efficient Unsteady Flow Visualization with High-Order Access Dependencies<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '16)</em>, Taipei, Apr. 12-15, pages 82-97, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/PACIFICVIS.2016.7465254">DOI</a> | <a href="publications/ZhangGY16-small.pdf">PDF (2.4 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Jiang Zhang, Richen Liu, Lu Liu, Xiaoru Yuan, Jian Huang, Xiangfei Meng, and Jingshan Pan<br>
+            Advection-based Sparse Data Management for Visualizing Unsteady Flow<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '14)</em>, 20(12):2555-2564, 2014.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2014.2346418">DOI</a> 
+            | <a href="publications/GuoZLLYHMP14-small.pdf">PDF (4.8 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Wenbin He, Junpeng Wang, <b>Hanqi Guo</b>, Ko-Chih Wang, Han-Wei Shen, Mukund Raj, Youssef S. G. Nashed, and Tom Peterka<br>
+            InSituNet: Deep Image Synthesis for Parameter Space Exploration of Ensemble Simulations<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2019)</em>, 26(1):23-33, 2020. (<b>Best Paper Award</b>)<br>
+            | <a href="https://doi.org/10.1109/TVCG.2019.2934312">DOI</a> 
+            | <a href="https://arxiv.org/abs/1908.00407">arXiv</a> 
+            | <a href="publications/HeWGWSRNP19.pdf">PDF (7.5 MB)</a> 
+            | <a href="https://www.anl.gov/mcs/article/researchers-win-best-paper-award-at-visualization-conference">Press Release</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Tom Peterka, and Andreas Glatz<br>
+            In Situ Magnetic Flux Vortex Visualization in Time-Dependent Ginzburg-Landau Superconductor Simulations<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '17)</em>, Seuol, Korea, April 18-21, pages 71-80, 2017.<br>
+            | <a href="https://doi.org/10.1109/PACIFICVIS.2017.8031581">DOI</a> | <a href="publications/GuoPG17.pdf">PDF (11 MB)</a> | <a href="publications/GuoPG17.mp4">Video (25 MB)</a> 
+            | <a href="https://github.com/hguo/vortexfinder2">Github</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jong Youl Choi, Choong-Seock Chang, Julien Dominski, Scott Klasky, Gabriele Merlo, Eric Suchyta, Mark Ainsworth, Bryce Allen, Franck Cappello, Michael Churchill, Philip Davis, Sheng Di, Greg Eisenhauer, Stephane Ethier, Ian Foster, Berk Geveci, <b>Hanqi Guo</b>, Kevin Huck, Frank Jenko, Mark Kim, James Kress, Seung-Hoe Ku, Qing Liu, Jeremy Logan, Allen Malony, Kshitij Mehta, Kenneth Moreland, Todd Munson, Manish Parashar, Tom Peterka, Norbert Podhorszki, Dave Pugmire, Ozan Tugluk, Ruonan Wang, Ben Whitney, Matthew Wolf, and Chad Wood<br>
+            Coupling Exascale Multiphysics Applications: Methods and Lessons Learned<br>
+            In <em>Proceedings of IEEE International Conference on eScience 2018</em>, Amsterdam, Netherlands, October 29-November 1, pages 442-452, 2018.<br>
+            | <a href="https://doi.org/10.1109/eScience.2018.00133">DOI</a> 
+            | PDF | 
+            </div></p></li>
+
+            <li><p><div align="left">Mark Kim, James Kress, Jong Youl Choi, Norbert Odhorszki, Scott Klasky, Matthew Wolf, Kshitij Mehta, Kevin Huck, Berk Geveci, Sujin Philip, Robert Maynard, <b>Hanqi Guo</b>, Thomas Peterka, Kenneth Moreland, Choong-Seock Chang, Julien Dominski, Michael Churchill, and David Pugmire<br>
+            In Situ Analysis and Visualization of Fusion Simulations: Lessons Learned<br>
+            In <em>Proceedings of ISC Workshop on In Situ Visualization (WOIV '18)</em>, Frankfurt, Germany, June 28, 2018.<br>
+            | <a href="https://doi.org/10.1007/978-3-030-02465-9_16">DOI</a> 
+            | PDF | 
+            </div></p></li>
+
+            <li><p><div align="left">Ian Foster, Mark Ainsworth, Bryce Allen, Julie Bessac, Franck Cappello, Jong Youl Choi, Emil Constantinescu, Philip E. Davis, Sheng Di, Wendy Di, <b>Hanqi Guo</b>, Scott Klasky, Kerstin Kleese Van Dam, Tahsin Kurc, Qing Liu, Abid Malik, Kshitij Mehta, Klaus Mueller, Todd Munson, George Ostouchov, Manish Parashar, Tom Peterka, Line Pouchard, Dingwen Tao, Ozan Tugluk, Stefan Wild, Matthew Wolf, Justin M. Wozniak, Wei Xu, and Shinjae Yoo<br>
+            Computing Just What You Need: Online Data Analysis and Reduction at Extreme Scales<br>
+            In <em>Proceedings of International Conference on Parallel and Distributed Computing (EuroPar)</em>, pages 3-19, 2017.<br>
+            | <a href="https://doi.org/10.1007/978-3-319-64203-1_1">DOI</a> 
+            | PDF |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+
+
+
+
+          <h3 id="reduction">Data reduction and compression</h3>
+          <p>TBA</p>
+
+          <ul>
+            <li><p><div align="left">Xin Liang, <b>Hanqi Guo</b>, Sheng Di, Franck Cappello, Mukund Raj, Chunhui Liu, Kenji Ono, Zizhong Chen, and Tom Peterka<br>
+            Toward Feature Preserving 2D and 3D Vector Field Compression<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium</em>, Tianjin, China, June 3-5, pages 81-90, 2020.<br>
+            | <a href="https://doi.org/10.1109/PacificVis48177.2020.6431">DOI</a> 
+            | <a href="publications/LiangGDCRLOCP20-small.pdf">PDF (1.4 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Dingwen Tao, Sheng Di, <b>Hanqi Guo</b>, Zizhong Chen, and Franck Cappello<br>
+            Z-checker: A Framework for Assessing Lossy Compression of Scientific Data<br>
+            <em>International Journal of High Performance Computing Applications</em>, 33(2):285-303, 2019.<br>
+            | <a href="https://doi.org/10.1177/1094342017737147">DOI</a> 
+            | <a href="https://arxiv.org/abs/1707.09320v1">arXiv</a>
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left"> Xin Liang, Sheng Di, Dingwen Tao, Sihuan Li, Shaomeng Li, <b>Hanqi Guo</b>, Zizhong Chen, and Franck Cappello<br>
+            Error-Controlled Lossy Compression Optimized for High Compression Ratios of Scientific Datasets<br>
+            In <em>Proceedings of IEEE International Conference on BIG DATA</em>, pages 438-447, Seattle, WA, December 10-13, 2018.<br>
+            | <a href="https://doi.org/10.1109/BigData.2018.8622520">DOI</a>
+            | <a href="publications/LiangDTLLGCC18.pdf">PDF</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Fan Hong, Chongke Bi, <b>Hanqi Guo</b>, Kenji Ono, and Xiaoru Yuan<br>
+            Compression-based Integral Curve Data Reuse Framework for Flow Visualization<br>
+            <em>Journal of Visualization</em>, 20(4):859-874, 2017.<br>
+            | <a href="https://doi.org/10.1007/s12650-017-0428-4">DOI</a> 
+            | PDF |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+
+
+          <h3 id="uncertainty">Uncertainty and ensemble visualization</h3>
+          <p>TBA</p>
+
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, Wenbin He, Sangmin Seo, Han-Wei Shen, Emil Mihai Constantinescu, Chunhui Liu, and Tom Peterka<br>
+            Extreme-Scale Stochastic Particle Tracing for Uncertain Unsteady Flow Visualization and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 25(9):2710-2724, 2019.<br>
+            | <a href="http://doi.org/10.1109/TVCG.2018.2856772">DOI</a> 
+            | <a href="publications/GuoHSSCLP18-small.pdf">PDF (1.8 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Wenbin He, Tom Peterka, Han-Wei Shen, Scott M. Collis, and Jonathan J. Helmus<br>
+            Finite-Time Lyapunov Exponents and Lagrangian Coherent Structures in Uncertain Unsteady Flows<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (PacificVis '16)</em>, 22(6):1672-1682, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2016.2534560">DOI</a> | <a href="publications/GuoHPSCH16-small.pdf">PDF (2.8 MB)</a> | <a href="http://www.mcs.anl.gov/articles/defining-features-uncertain-unsteady-flows">Science Highlights</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Xiaoru Yuan, Jian Huang, and Xiaomin Zhu<br>
+            Coupled Ensemble Flow Line Advection and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '13)</em>, 19(12):2733-2742, 2013.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2013.144">DOI</a> 
+            | <a href="publications/GuoYHZ13-small.pdf">PDF (633 KB) </a> 
+            | <a href="publications/GuoYHZ13-small.mp4">Video (8.2 MB) </a> |
+            </div></p></li>
+
+            <li><p><div align="left">Wenbin He, <b>Hanqi Guo</b>, Han-Wei Shen, and Tom Peterka<br>
+            <em>e</em>FESTA: Ensemble Feature Exploration with Surface Density Estimates<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 26(4):1716-1731, 2020.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2018.2879866">DOI</a> 
+            | <a href="publications/HeGSP19-small.pdf">PDF (1.8 MB)</a>
+            | <a href="https://github.com/hewenbin/sde">GitHub</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Qingya Shu, <b>Hanqi Guo</b>, Jie Liang, Limei Che, Junfeng Liu, and Xiaoru Yuan<br>
+            EnsembleGraph: Interactive Visual Analysis of Spatialtemporal Behaviors for Ensemble Simulation Data<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '16)</em>, Taipei, Apr. 12-15, pages 56-63, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/PACIFICVIS.2016.7465251">DOI</a> | <a href="publications/ShuGLCLY16-small.pdf">PDF (4.5 MB)</a> | <a href="publications/ShuGLCLY16.wmv">Video (24 MB)</a> | 
+            </div></p></li>
+
+            <li><p><div align="left">Richen Liu, <b>Hanqi Guo</b>, Jiang Zhang, and Xiaoru Yuan<br>
+            Comparative Visualization of Vector Field Ensembles Based on Longest Common Subsequence<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '16)</em>, Taipei, Apr. 12-15, pages 96-103, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/PACIFICVIS.2016.7465256">DOI</a> | <a href="publications/LiuGZY16-small.pdf">PDF (5.4 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Wenbin He, Junpeng Wang, <b>Hanqi Guo</b>, Han-Wei Shen, and Tom Peterka<br>
+            CECAV: Collective Ensemble Comparison and Visualization using Deep Neural Networks<br>
+            <em>Journal of Visual Informatics</em>, 4(2):109--121, 2020.<br>
+            | <a href="https://doi.org/10.1016/j.visinf.2020.04.004">DOI</a> 
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left">Richen Liu, <b>Hanqi Guo</b>, and Xiaoru Yuan<br>
+            A Bottom-Up Scheme for User-Defined Feature Comparison in Ensemble Data<br>
+            In <em>Proceedings of SIGGRAPH Asia 2015 Symposium on Visualization in High Performance Computing</em>, pages 10:1-10:4, Kobe, Japan, Nov. 2-5, 2015.<br>
+            | <a href="http://dx.doi.org/10.1145/2818517.2818531">DOI</a> 
+            | PDF |
+            </div></p></li>
+          </ul>
+          </ul>
+          <hr class="featurette-divider">
+
+
+          <h3 id="flow">Flow visualization</h3>
+          <p>TBA</p>
+
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, Wenbin He, Sangmin Seo, Han-Wei Shen, Emil Mihai Constantinescu, Chunhui Liu, and Tom Peterka<br>
+            Extreme-Scale Stochastic Particle Tracing for Uncertain Unsteady Flow Visualization and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 25(9):2710-2724, 2019.<br>
+            | <a href="http://doi.org/10.1109/TVCG.2018.2856772">DOI</a> 
+            | <a href="publications/GuoHSSCLP18-small.pdf">PDF (1.8 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jun Han, Jun Tao, Hao Zheng, <b>Hanqi Guo</b>, Danny Z. Chen, and Chaoli Wang<br>
+            Flow Field Reduction via Reconstructing Vector Data from 3D Streamlines Using Deep Learning<br>
+            <em>IEEE Computer Graphics and Applications, Special Issue on Visual Computing with Deep Learning</em>, 39(4):54-67, 2019.<br>
+            | <a href="https://doi.org/10.1109/MCG.2018.2881523">DOI</a> 
+            | <a href="publications/HanTGCW19.pdf">PDF</a> |
+            </div></p></li>       
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Xiaoru Yuan, Jian Huang, and Xiaomin Zhu<br>
+            Coupled Ensemble Flow Line Advection and Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '13)</em>, 19(12):2733-2742, 2013.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2013.144">DOI</a> 
+            | <a href="publications/GuoYHZ13-small.pdf">PDF (633 KB) </a> 
+            | <a href="publications/GuoYHZ13-small.mp4">Video (8.2 MB) </a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jiang Zhang, <b>Hanqi Guo</b>, Fan Hong, Xiaoru Yuan, and Tom Peterka<br>
+            Dynamic Load Balancing Based on Constrained K-D Tree Decomposition for Parallel Particle Tracing<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '17)</em>, 24(1):954-963, 2018.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2017.2744059">DOI</a>
+            | <a href="publications/ZhangGHXP17.pdf">PDF (3.5 MB)</a>
+            | <a href="https://vimeo.com/230835488">Video Preview</a> |
+            </div></p></li> 
+
+            <li><p><div align="left">Jiang Zhang, <b>Hanqi Guo</b>, Xiaoru Yuan, and Tom Peterka<br>
+            Dynamic Data Repartitioning for Load-Balanced Parallel Particle Tracing<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '18)</em>, pages 86-95, Kobe, Japan, April 10-13, 2018.<br>
+            | <a href="https://doi.org/10.1109/PacificVis.2018.00019">DOI</a>
+            | <a href="publications/ZhangGYP18.pdf">PDF (4.0 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Fan Hong, Chongke Bi, <b>Hanqi Guo</b>, Kenji Ono, and Xiaoru Yuan<br>
+            Compression-based Integral Curve Data Reuse Framework for Flow Visualization<br>
+            <em>Journal of Visualization</em>, 20(4):859-874, 2017.<br>
+            | <a href="https://doi.org/10.1007/s12650-017-0428-4">DOI</a> 
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left">Richen Liu, <b>Hanqi Guo</b>, and Xiaoru Yuan<br>
+            User-Defined Feature Comparison for Vector Field Ensembles<br>
+            <em>Journal of Visualization</em>, 20(2):217-229, 2017.<br>
+            | <a href="https://doi.org/10.1007/s12650-016-0388-0">DOI</a> 
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left">Richen Liu, <b>Hanqi Guo</b>, Jiang Zhang, and Xiaoru Yuan<br>
+            Comparative Visualization of Vector Field Ensembles Based on Longest Common Subsequence<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '16)</em>, Taipei, Apr. 12-15, pages 96-103, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/PACIFICVIS.2016.7465256">DOI</a> | <a href="publications/LiuGZY16-small.pdf">PDF (5.4 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Fan Hong, Chufan Lai, <b>Hanqi Guo</b>, Enya Shen, Xiaoru Yuan, and Sikun Li<br>
+            FLDA: Latent Dirichlet Allocation Based Unsteady Flow Analysis<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '14)</em>, 20(12):2545-2554, 2014.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2014.2346416">DOI</a> 
+            | <a href="publications/HongLGSYL14-small.pdf">PDF (4.6 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Fan Hong, Qingya Shu, Jiang Zhang, Jian Huang, and Xiaoru Yuan<br>
+            Scalable Lagrangian-based Attribute Space Projection for Multivariate Unsteady Flow Data<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2014)</em>, pages 33-40, Yokohama, Japan, Mar. 4-7, 2014.<br>
+            | <a href="https://doi.org/10.1109/PacificVis.2014.15">DOI</a> 
+            | <a href="publications/GuoHSZHY14-small.pdf">PDF (1.6 MB)</a> 
+            | <a href="publications/GuoHSZHY14-small.mp4">Video (5.1 MB)</a> | 
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+          <h3 id="volume">Volume visualization</h3>
+          <p>TBA</p>
+
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, Ningyu Mao, and Xiaoru Yuan<br>
+            WYSIWYG (What You See is What You Get) Volume Visualization<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '11)</em>, 17(12):2106-2114, 2011.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2011.261">DOI</a> 
+            | <a href="publications/GuoMY11-small.pdf">PDF (1.4 MB)</a> 
+            | <a href="publications/GuoMY11-small.mp4">Video (6.3 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Jun Tao, Martin Imre, Chaoli Wang, Nitesh V. Chawla, <b>Hanqi Guo</b>, Gökhan Sever, and Seung Hyun Kim<br>
+            Exploring Time-Varying Multivariate Volume Data Using Matrix of Isosurface Similarity Maps<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS' 18)</em>, 25(1):1236-1245, 2019.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2018.2864808">DOI</a> 
+            | <a href="publications/TaoIWCGSK18.pdf">PDF (7.0 MB)</a> 
+            | <a href="https://vimeo.com/290325769">Video Preview</a>
+            | <a href="https://github.com/mimre25/isosurface-analysis">GitHub</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, He Xiao, and Xiaoru Yuan<br>
+            Scalable Multivariate Volume Visualization and Analysis based on Dimension Projection and Parallel Coordinates<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 18(9):1397-1410, 2012.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2012.80">DOI</a> 
+            | <a href="publications/GuoXY12-small.pdf">PDF (860 KB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, He Xiao, and Xiaoru Yuan<br>
+            Multi-Dimensional Transfer Function Design based on Flexible Dimension Projection Embedded in Parallel Coordinates<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2011)</em>, pages 19-26, Hong Kong, Mar 1-4, 2011.<br>
+            | <a href="http://dx.doi.org/10.1109/PACIFICVIS.2011.5742368">DOI</a> 
+            | <a href="publications/GuoXY11-small.pdf">PDF (1.1 MB)</a> 
+            | <a href="publications/GuoXY11-small.mp4">Video (4.9 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Wei Li, and Xiaoru Yuan<br>
+            Transfer Function Map<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2014), Notes Paper</em>, pages 262-266, Yokohama, Japan, Mar. 4-7, 2014.<br>
+            | <a href="http://dx.doi.org/10.1109/PacificVis.2014.24">DOI</a>
+            | <a href="publications/GuoLY14-small.pdf">PDF (218 KB)</a> | 
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b> and Xiaoru Yuan<br>
+            Local WYSIWYG Volume Visualization<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2013)</em>, pages 65-72, Sydney, NSW, Australia, Feb. 28-Mar.1, 2013.<br>
+            | <a href="http://dx.doi.org/10.1109/PacificVis.2013.6596129">DOI</a> 
+            | <a href="publications/GuoY13-small.pdf">PDF (633 KB)</a> 
+            | <a href="publications/GuoY13-small.mp4">Video (8.2 MB)</a> | 
+            </div></p></li>
+
+            <li><p><div align="left">Richen Liu, <b>Hanqi Guo</b> and Xiaoru Yuan<br>
+            Seismic Structure Extraction Based on Multi-scale Sensitivity Analysis<br>
+            <em>Journal of Visualization</em>, 17(3):157-166, 2014<br> 
+            | <a href="http://dx.doi.org/10.1007/s12650-014-0207-4">DOI</a> | PDF | Video |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Xiaoru Yuan, Jie Liu, Guihua Shan, Xuebin Chi, and Fei Sun<br>
+            Interference Microscopy Volume Illustration for Biomedical Data<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2012)</em>, pages 177-184, Songdo, Korea, Feb. 28-Mar. 2, 2012.<br>
+            | <a href="http://dx.doi.org/10.1109/PacificVis.2012.6183589">DOI</a> 
+            | <a href="publications/GuoYLSCS12-small.pdf">PDF (933 KB)</a> 
+            | <a href="publications/GuoYLSCS12-small.mp4">Video (5.1 MB)</a> | 
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b> and Xiaoru Yuan<br>
+            Transfer Functions for Volume Visualization: State-of-the-Art<br>
+            <em>Journal of Computer-Aided Design and Computer Graphics</em>, 24(10):1249-1258, 2012. (In Chinese)<br>
+            | <a href="publications/GuoY12-small.pdf">PDF (5.0 MB)</a> |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+
+
+
+          <h3 id="vast">Visual analytics</h3>
+          <p>TBA</p>
+
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, Zuchao Wang, Bowen Yu, Huijing Zhao, and Xiaoru Yuan<br>
+            TripVista: Triple Perspective Visual Trajectory Analytics and Its Application on Microscopic Traffic Data at a Road Intersection<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2011)</em>, pages 163-170, Hong Kong, Mar 1-4, 2011.<br>
+            | <a href="http://dx.doi.org/10.1109/PACIFICVIS.2011.5742386">DOI</a> 
+            | <a href="publications/GuoWYZY11-small.pdf">PDF (1.2 MB)</a> 
+            | <a href="publications/GuoWYZY11-small.mp4">Video (6.3 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left"><b>Hanqi Guo</b>, Sheng Di, Rinku Gupta, Tom Peterka, and Franck Cappello<br>
+            <em>La VALSE</em>: Scalable Log Visualization for Fault Characterization in Supercomputers<br>
+            In <em>Proceedings of EuroGraphics Symposium on Parallel Graphics and Visualization (EGPGV '18)</em>, pages 91-100, Brno, Czech Republic, June 4, 2018.<br>
+            | <a href="http://dx.doi.org/10.2312/pgv.20181099">DOI</a> 
+            | <a href="publications/GuoDGPC18.pdf">PDF (2.8 MB)</a>
+            | <a href="publications/GuoDGPC18.mov">Video (24 MB)</a>
+            | <a href="https://github.com/hguo/LaValse">GitHub</a> 
+            | <a href="https://www.anl.gov/mcs/article/la-valse">Highlight</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Fan Hong, Siming Chen, <b>Hanqi Guo</b>, Xiaoru Yuan, Jian Huang, and Yongxian Zhang<br>
+            Visual Exploration of Ionosphere Disturbances for Earthquake Research<br>
+            In <em>SA'17: Proceedings of SIGGRAPH Asia 2017 Symposium on Visualization</em>, pages 2:1-2:8, Bangkok, Thailand, November 27-30, 2017.<br>
+            | <a href="http://doi.org/10.1145/3139295.3139301">DOI</a> 
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left">Sheng Di, <b>Hanqi Guo</b>, Rinku Gupta, Eric R. Pershey, Marc Snir, and Franck Cappello<br>
+            Exploring Properties and Correlations of Fatal Events in a Large-Scale HPC System<br>
+            <em>IEEE Transactions on Parallel and Distributed Systems</em>, 30(2):361-374, 2019.<br>
+            | <a href="http://doi.org/10.1109/TPDS.2018.2864184">DOI</a> 
+            | PDF 
+            | <a href="https://www.anl.gov/mcs/article/logaider-a-tool-for-diagnosing-system-failures">Press Release</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Dingwen Tao, Sheng Di, <b>Hanqi Guo</b>, Zizhong Chen, and Franck Cappello<br>
+            Z-checker: A Framework for Assessing Lossy Compression of Scientific Data<br>
+            <em>International Journal of High Performance Computing Applications</em>, 33(2):285-303, 2019.<br>
+            | <a href="https://doi.org/10.1177/1094342017737147">DOI</a> 
+            | <a href="https://arxiv.org/abs/1707.09320v1">arXiv</a>
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left">Sheng Di, <b>Hanqi Guo</b>, Eric R. Pershey, Marc Snir, and Franck Cappello<br>
+            Characterizing and Understanding HPC Job Failures over The 2K-day Life of IBM BlueGene/Q System<br>
+            In <em>Proceedings of IEEE/IFIP International Conference on Dependable Systems and Networks (DSN 2019)</em>, pages 473-484, Portland, OR, 2019.<br>
+            | <a href="https://doi.org/10.1109/DSN.2019.00055">DOI</a> 
+            | PDF |
+            </div></p></li>
+
+            <li><p><div align="left">Xiaoru Yuan, He Xiao, <b>Hanqi Guo</b>, Peihong Guo, Wesley Kendall, Jian Huang, and Yongxian Zhang<br>
+            Scalable Multi-variate Analytics of Seismic and Satellite-based Observational Data<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '10)</em>, 16(3):1413-1420, 2010.<br>
+            | <a href="http://doi.ieeecomputersociety.org/10.1109/TVCG.2010.192">DOI</a> 
+            | <a href="publications/YuanXGGKHZ10-small.pdf">PDF (3.3 MB)</a> |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+        </div>
+
+        <div class="col-md-3">
+          <div class="bs-sidebar affix">
+            <ul class="nav bs-sidenav-fixed">
+              <li><a href="#ftk">Feature tracking</a></li>
+              <li><a href="#ai">AI/ML</a></li>
+              <li><a href="#parallel">Parallel and in situ visualization</a></li>
+              <li><a href="#reduction">Data reduction and compression</a></li>
+              <li><a href="#uncertainty">Uncertainty visualization</a></li>
+              <li><a href="#flow">Flow visualization</a></li>
+              <li><a href="#volume">Volume visualization</a></li>
+              <li><a href="#vast">Visual analytics</a></li>
+            </ul>
+          </div>
+        </div>
+
+
+      </div>
+
+      <hr>
+      <footer>
+        <p>Hanqi Guo</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

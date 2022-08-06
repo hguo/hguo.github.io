@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hanqi Guo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F527RLQW8Z"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-F527RLQW8Z');
+    </script>
+  </head>
+
+  <body>
+    
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Hanqi Guo</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="teaching.html">Teaching</a></li>
+            <li class="active"><a href="software.html">Software</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class='row'>
+        
+        <div class="col-md-2">
+          <div class="bs-sidebar affix">
+            <ul class="nav bs-sidenav-fixed">
+              <li><a href="#ftk">FTK</a></li>
+              <li><a href="#vf2">vortexfinder2</a></li>
+              <li><a href="#lavalse">La Valse</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-10">
+          <h3 id="ftk">FTK: Feature Tracking Kit</h3>
+          <p><a href="https://github.com/hguo/ftk">FTK</a> is a library that scales, simplifies, and delivers feature tracking algorithms for scientific datasets. You may use FTK as ParaView plugins, Python bindings, or a command-line interface</p>
+
+
+          <h3 id="vf2">vortexfinder2</h3>
+          <p><a href="https://github.com/hguo/vortexfinder2"><em>vortexfinder2</em></a> provides tools to analyze and visualize vorticies in 
+          time-dependent Ginzburg-Landau (TDGL) superconductor simulation data. 
+          Output data from two simulation models are supported, namely GLGPU and Condor2. 
+          GLGPU and Condor2 are based on structured grid and unstructured grid, respectively.</p>
+
+          <p>The software is part of the OSCON (Optimizing Superconductor Transport Properties 
+          through Large-Scale Simulation) project for the 
+          Scientific Discovery through Advanced Computing Institutes.</p>
+
+          <h4>Publications</h4>
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, Tom Peterka, and Andreas Glatz<br>
+            In Situ Magnetic Flux Vortex Visualization in Time-Dependent Ginzburg-Landau Superconductor Simulations<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis '17)</em>, Seuol, Korea, April 18-21, pages 71-80, 2017.<br>
+            | <a href="https://doi.org/10.1109/PACIFICVIS.2017.8031581">DOI</a> | <a href="publications/GuoPG17.pdf">PDF (11 MB)</a> | <a href="publications/GuoPG17.mp4">Video (25 MB)</a> 
+            | <a href="https://github.com/hguo/vortexfinder2">Github</a> |
+            </div></p></li>
+            
+            <li><p><div align="left"><b>Hanqi Guo</b>, Carolyn L. Phillps, Tom Peterka, Dmitry Karpeyev, and Andreas Glatz<br>
+            Extracting, Tracking, and Visualizing Magnetic Flux Vortices in 3D Complex-Valued Superconductor Simulation Data<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (VIS '15)</em>, 22(1):827-836, 2016.<br>
+            | <a href="http://dx.doi.org/10.1109/TVCG.2015.2466838">DOI</a> 
+            | <a href="publications/GuoPPKG15.pdf">PDF (3.8 MB)</a> 
+            | <a href="publications/GuoPPKG15.mp4">Video (11 MB)</a> 
+            | <a href="https://vimeo.com/groups/vis2015previews/videos/136542098">Video Preview</a> 
+            | <a href="https://github.com/hguo/vortexfinder2">Github</a> |
+            </div></p></li>
+            
+            <li><p><div align="left">Carolyn L. Phillips, <b>Hanqi Guo</b>, Tom Peterka, Dmitry Karpeyev, and Andreas Glatz<br>
+            Tracking Vortices in Superconductors: Extracting Singularities from a Discretized Complex Scalar Field Evolving in Time<br>
+            <em>Physical Reivew E</em>, 93(023305), 2016.<br>
+            | <a href="http://dx.doi.org/10.1103/PhysRevE.93.023305">DOI</a> | PDF |
+            </div></p></li>
+          </ul>
+
+
+          <h3 id="lavalse">La Valse: Visual Analysis Tool for Fault Characterization of Supercomputers</h3>
+          <p><a href="https://github.com/hguo/LaValse">La Valse</a> is designed to visualize and analyze large-scale heterogeneous logs on supercomputers, 
+          in order to characterize faults. Currently, the tool provides a user interface 
+          to explore logs on IBM Blue Gene supercomputers.</p>
+
+          <h4>Publication</h4>
+          <ul>
+            <li><p><div align="left"><b>Hanqi Guo</b>, Sheng Di, Rinku Gupta, Tom Peterka, and Franck Cappello<br>
+            <em>La VALSE</em>: Scalable Log Visualization for Fault Characterization in Supercomputers<br>
+            In <em>Proceedings of EuroGraphics Symposium on Parallel Graphics and Visualization (EGPGV '18)</em>, pages 91-100, Brno, Czech Republic, June 4, 2018.<br>
+            | <a href="http://dx.doi.org/10.2312/pgv.20181099">DOI</a> 
+            | <a href="publications/GuoDGPC18.pdf">PDF (2.8 MB)</a>
+            | <a href="publications/GuoDGPC18.mov">Video (24 MB)</a>
+            | <a href="https://github.com/hguo/LaValse">GitHub</a> |
+            </div></p></li>
+          </ul>
+
+          <!--
+          <h3>Past Projects</h3>
+          <ul>
+            <li><a href="http://vis.pku.edu.cn/scivis">PKU Scientific Visualization System</a> - A large-scale scientific data visualization system</li>
+          </ul>
+          -->
+        </div>
+      </div>
+
+      <hr>
+      <footer>
+        <p>Hanqi Guo</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
