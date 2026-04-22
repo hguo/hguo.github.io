@@ -252,6 +252,120 @@
 
 
 
+          <h3 id="fpc">Feature-preserving compression</h3>
+          <p>Exascale simulations and high-resolution experiments routinely generate data at rates that far exceed available I/O and storage bandwidth, forcing scientists to rely on lossy compression.  Generic error-bounded compressors guarantee pointwise error, but they can silently destroy the topological and structural features (critical points, Morse&ndash;Smale complexes, contour trees, integral curves, vector field trajectories, spectra, and other quantities of interest) that downstream analyses actually depend on.  Our group develops a family of feature-preserving lossy compressors&mdash;including the TopoSZ, MSz, TspSZ, TFZ, FFCz, EXaCTz, and related tools&mdash;that augment state-of-the-art SZ/ZFP-style compressors with provable guarantees on the preservation of these features, while remaining competitive in compression ratio and throughput on CPU, GPU, and distributed-memory systems.  This line of work is conducted with collaborators at Argonne, Utah, Missouri S&amp;T, and others, and is applied to fusion, climate, cosmology, fluid dynamics, and materials science datasets.</p>
+
+          <ul>
+            <li><p><div align="left">Yuxiao Li, Xin Liang, Bei Wang, and <b>Hanqi Guo</b><br>
+            Preserving Discrete Morse&ndash;Smale Complexes in Error-Bounded Lossy Compression<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 2026. (In Press)<br>
+            | DOI
+            | <a href="https://arxiv.org/abs/2409.17346">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Congrong Ren, Robert Underwood, Sheng Di, Emrecan Kutay, Zarija Lukic, Aylin Yener, Franck Cappello, and <b>Hanqi Guo</b><br>
+            FFCz: Fast Fourier Correction for Spectrum-Preserving Lossy Compression of Scientific Data<br>
+            In <em>IPDPS '26: Proceedings of the 40th IEEE International Parallel and Distributed Processing Symposium</em>, 2026. (Accepted)<br>
+            | DOI
+            | <a href="https://arxiv.org/abs/2601.01596">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Yuxiao Li, Mingze Xia, Xin Liang, Bei Wang, Robert Underwood, Sheng Di, Hemant Sharma, Dishant Beniwal, Franck Cappello, and <b>Hanqi Guo</b><br>
+            pMSz: A Distributed Parallel Algorithm for Correcting Morse-Smale Segmentations for Lossy Compression<br>
+            In <em>IPDPS '26: Proceedings of the 40th IEEE International Parallel and Distributed Processing Symposium</em>, 2026. (Accepted)<br>
+            | DOI
+            | <a href="https://arxiv.org/abs/2601.01787">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Mingze Xia, Yuxiao Li, Pu Jiao, Bei Wang, Xin Liang, and <b>Hanqi Guo</b><br>
+            Time-varying Vector Field Compression with Preserved Critical Point Trajectories<br>
+            In <em>ICDE '26: Proceedings of the 42nd IEEE International Conference on Data Engineering</em>, 2026. (Accepted)<br>
+            | DOI
+            | <a href="https://arxiv.org/abs/2510.25143">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Yuxiao Li, Mingze Xia, Xin Liang, Bei Wang, and <b>Hanqi Guo</b><br>
+            EXaCTz: Guaranteed Extremum Graph and Contour Tree Preservation for Distributed- and GPU-Parallel Lossy Compression<br>
+            arXiv:2604.01397 [cs.DC], 2026.<br>
+            | <a href="https://arxiv.org/abs/2604.01397">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Tripti Agarwal, Sheng Di, Xin Liang, Zhaoyuan Su, Yuxiao Li, Ganesh Gopalakrishnan, <b>Hanqi Guo</b>, and Franck Cappello<br>
+            TopoSZp: Lightweight Topology-Aware Error-controlled Compression for Scientific Data<br>
+            arXiv:2602.17552 [cs.DC], 2026.<br>
+            | <a href="https://arxiv.org/abs/2602.17552">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Congrong Ren, Sheng Di, Katrin Heitmann, Franck Cappello, and <b>Hanqi Guo</b><br>
+            Preserving Clusters in Error-Bounded Lossy Compression of Particle Data<br>
+            arXiv:2604.18801 [cs.LG], 2026.<br>
+            | <a href="https://arxiv.org/abs/2604.18801">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Nathaniel Gorski, Xin Liang, <b>Hanqi Guo</b>, and Bei Wang<br>
+            TFZ: Topology-Preserving Compression of 2D Symmetric and Asymmetric Second-Order Tensor Fields<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2025)</em>, 2025. (In Preprint)<br>
+            | <a href="https://doi.ieeecomputersociety.org/10.1109/TVCG.2025.3634844">DOI</a>
+            | <a href="https://arxiv.org/abs/2508.09235">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Mingze Xia, Bei Wang, Yuxiao Li, Pu Jiao, Xin Liang, and <b>Hanqi Guo</b><br>
+            TspSZ: An Efficient Parallel Error-Bounded Lossy Compressor for Topological Skeleton Preservation<br>
+            In <em>ICDE '25: Proceedings of the 41st IEEE International Conference on Data Engineering</em>, pp. 3682-3695, 2025.<br>
+            | <a href="https://doi.org/10.1109/ICDE65448.2025.00275">DOI</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Nathaniel Gorski, Xin Liang, <b>Hanqi Guo</b>, Lin Yan, and Bei Wang<br>
+            A General Framework for Augmenting Lossy Compressors with Topological Guarantees<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE PacificVis 2025 Journal Track)</em>, 31(6):3693-3705, 2025.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2025.3567054">DOI</a>
+            | <a href="https://arxiv.org/abs/2502.14022">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Yuxiao Li, Xin Liang, Bei Wang, Yongfeng Qiu, Lin Yan, and <b>Hanqi Guo</b><br>
+            MSz: An Efficient Parallel Algorithm for Correcting Morse-Smale Segmentations in Error-Bounded Lossy Compressors<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2024)</em>, 31(1):130-140, 2025.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2024.3456337">DOI</a>
+            | <a href="https://arxiv.org/abs/2406.09423">arXiv</a>
+            | <a href="https://github.com/YuxiaoLi1234/MSz-">GitHub</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Mingze Xia, Sheng Di, Franck Cappello, Pu Jiao, Kai Zhao, Jinyang Liu, Xuan Wu, Xin Liang, and <b>Hanqi Guo</b><br>
+            Preserving Topological Feature with Sign-of-Determinant Predicates in Lossy Compression: A Case Study of Vector Field Critical Points<br>
+            In <em>ICDE '24: Proceedings of IEEE International Conference on Data Engineering</em>, Utrecht, Netherlands, pp. 4979-4992, 2024.<br>
+            | <a href="https://doi.org/10.1109/ICDE60146.2024.00378">DOI</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Lin Yan, Xin Liang, <b>Hanqi Guo</b>, and Bei Wang<br>
+            TopoSZ: Preserving Topology in Error-Bounded Lossy Compression<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2023)</em>, 30(1):1302-1312, 2024.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2023.3326920">DOI</a>
+            | <a href="https://arxiv.org/abs/2304.11768">arXiv</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Xin Liang, Sheng Di, Franck Cappello, Mukund Raj, Chunhui Liu, Kenji Ono, Zizhong Chen, Tom Peterka, and <b>Hanqi Guo</b><br>
+            Toward Feature-Preserving Vector Field Compression<br>
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 29(12):5434-5450, 2023.<br>
+            | <a href="https://doi.org/10.1109/TVCG.2022.3214821">DOI</a>
+            | <a href="https://u.osu.edu/guo-2154/files/2022/11/LiangDCRLOCPG22.pdf">PDF (7.7 MB)</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Pu Jiao, Sheng Di, <b>Hanqi Guo</b>, Kai Zhao, Jiannan Tian, Dingwen Tao, Xin Liang, and Franck Cappello<br>
+            Toward Quantity-of-Interest Preserving Lossy Compression for Scientific Data<br>
+            In <em>Proceedings of the VLDB Endowment</em>, 16(4):697-710, 2022.<br>
+            | <a href="https://doi.org/10.14778/3574245.3574255">DOI</a> |
+            </div></p></li>
+
+            <li><p><div align="left">Xin Liang, <b>Hanqi Guo</b>, Sheng Di, Franck Cappello, Mukund Raj, Chunhui Liu, Kenji Ono, Zizhong Chen, and Tom Peterka<br>
+            Toward Feature Preserving 2D and 3D Vector Field Compression<br>
+            In <em>Proceedings of IEEE Pacific Visualization Symposium</em>, Tianjin, China, June 3-5, pages 81-90, 2020.<br>
+            | <a href="https://doi.org/10.1109/PacificVis48177.2020.6431">DOI</a>
+            | <a href="publications/LiangGDCRLOCP20-small.pdf">PDF (1.4 MB)</a> |
+            </div></p></li>
+          </ul>
+          <hr class="featurette-divider">
+
+
           <h3 id="reduction">Data reduction and compression</h3>
           <p>TBA</p>
 
@@ -574,6 +688,7 @@
               <li><a href="#ftk">Feature tracking</a></li>
               <li><a href="#ai">AI/ML</a></li>
               <li><a href="#parallel">Parallel and in situ visualization</a></li>
+              <li><a href="#fpc">Feature-preserving compression</a></li>
               <li><a href="#reduction">Data reduction and compression</a></li>
               <li><a href="#uncertainty">Uncertainty visualization</a></li>
               <li><a href="#flow">Flow visualization</a></li>
