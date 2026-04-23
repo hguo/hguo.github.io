@@ -12,6 +12,29 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <style>
+      .section-toggle {
+        margin-left: 0.6em;
+        color: #888;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: normal;
+        vertical-align: middle;
+      }
+      .section-toggle:hover,
+      .section-toggle:focus {
+        color: #337ab7;
+        text-decoration: none;
+      }
+      .section-toggle .toggle-icon {
+        display: inline-block;
+        transition: transform 0.2s ease;
+      }
+      .section-toggle:not(.collapsed) .toggle-icon {
+        transform: rotate(90deg);
+      }
+    </style>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F527RLQW8Z"></script>
     <script>
@@ -55,12 +78,12 @@
       <div class='row'>
 
         <div class="col-md-9">  
-          <h3 id="ftk">Feature extraction and tracking</h3>
+          <h3 id="ftk">Feature extraction and tracking <a class="section-toggle collapsed" data-toggle="collapse" href="#ftk-pubs" aria-expanded="false" aria-controls="ftk-pubs"><small><span class="toggle-icon">&#9654;</span> 6 papers</small></a></h3>
           <p>Feature tracking is a core topic in scientific visualization for  understanding dynamic behaviors in time-varying simulation and experimental data.  By tracking features such as extrema, vortex cores, and boundary surfaces, one can highlight key regions in visualization, reduce data to store, and enable further analysis based on the dynamics of features in scientific data.</p>
 
           <p>We have developed a general framework, namely <a href="https://github.com/hguo/ftk">FTK</a>, that delivers a collection of feature-tracking tools to end users, scales feature-tracking algorithms in distributed and parallel environments, and simplifies the development of new feature-tracking algorithms.  We applied FTK to various applications including fusion energy sciences, superconductivity, and high-speed imaging experiments.</p>
 
-          <ul>
+          <ul id="ftk-pubs" class="collapse">
             <li><p><div align="left"><b>Hanqi Guo</b>, David Lenz, Jiayi Xu, Xin Liang, Wenbin He, Iulian R. Grindeanu, Han-Wei Shen, Tom Peterka, Todd Munson, and Ian Foster<br>
             FTK: A Simplicial Spacetime Meshing Framework for Robust and Scalable Feature Tracking<br>
             <em>IEEE Transactions on Visualization and Computer Graphics</em>, 2021. (In Preprint)<br> 
@@ -109,10 +132,10 @@
           <hr class="featurette-divider">
 
 
-          <h3 id="ai">AI, machine learning, and deep learning</h3>
+          <h3 id="ai">AI, machine learning, and deep learning <a class="section-toggle collapsed" data-toggle="collapse" href="#ai-pubs" aria-expanded="false" aria-controls="ai-pubs"><small><span class="toggle-icon">&#9654;</span> 3 papers</small></a></h3>
           <p>As scientists anticipate the benefits of exascale computing, the lack of novel solutions to process data at scale and calibrate the simulation parameters has become a significant roadblock to further accelerating scientific discovery.  The goal of our NSF project on deep learning for visualization is to develop a new end-to-end data analysis and feature extraction workflow based on deep neural networks to help computational scientists address three major challenges: (1) identify important simulation parameters and generate the essential data for analysis, (2) transform the simulation data to compact feature representations to convey the most insight, and (3) design scalable visualization algorithms coupled with large-scale simulations to glean insight into their scientific problems. Working with domain scientists in jet engine design, climate models, cardio/cerebrovascular flow, superconductivity, and fusion energy, the team will demonstrate how deep learning techniques can help extract features from vast amounts of simulation data and navigate in the huge simulation parameter space. Through summer internships and project collaborations, this research will create opportunities for graduate and undergraduate students, including students from underrepresented groups, to participate in key research initiatives with leading scientists. Through the planned annual summer school on "Deep Learning for Visualization," the research results will enable visualization researchers and a broader community to incorporate the principles and practice of deep learning techniques developed.</p>
 
-          <ul>
+          <ul id="ai-pubs" class="collapse">
             <li><p><div align="left">Wenbin He, Junpeng Wang, <b>Hanqi Guo</b>, Ko-Chih Wang, Han-Wei Shen, Mukund Raj, Youssef S. G. Nashed, and Tom Peterka<br>
             InSituNet: Deep Image Synthesis for Parameter Space Exploration of Ensemble Simulations<br>
             <em>IEEE Transactions on Visualization and Computer Graphics (Proc. IEEE VIS 2019)</em>, 26(1):23-33, 2020. (<b>Best Paper Award</b>)<br>
@@ -140,10 +163,10 @@
 
 
 
-          <h3 id="parallel">Parallel and in situ visualization</h3>
+          <h3 id="parallel">Parallel and in situ visualization <a class="section-toggle collapsed" data-toggle="collapse" href="#parallel-pubs" aria-expanded="false" aria-controls="parallel-pubs"><small><span class="toggle-icon">&#9654;</span> 14 papers</small></a></h3>
           <p>Scientific simulations on modern HPC systems produce data far faster than it can be written to disk, demanding visualization and analysis algorithms that scale across thousands of compute nodes and run <em>in situ</em> alongside the running simulation.  Our research in this area develops parallel and distributed algorithms for particle tracing, feature tracking, union-find, and large-scale data reduction, together with in situ workflows that couple visualization directly with running fusion, superconductivity, and combustion simulations on DOE supercomputers.</p>
 
-          <ul>
+          <ul id="parallel-pubs" class="collapse">
             <li><p><div align="left"><b>Hanqi Guo</b>, David Lenz, Jiayi Xu, Xin Liang, Wenbin He, Iulian R. Grindeanu, Han-Wei Shen, Tom Peterka, Todd Munson, and Ian Foster<br>
             FTK: A Simplicial Spacetime Meshing Framework for Robust and Scalable Feature Tracking<br>
             <em>IEEE Transactions on Visualization and Computer Graphics</em>, 2021. (In Preprint)<br> 
@@ -252,10 +275,10 @@
 
 
 
-          <h3 id="fpc">Feature-preserving compression</h3>
+          <h3 id="fpc">Feature-preserving compression <a class="section-toggle" data-toggle="collapse" href="#fpc-pubs" aria-expanded="true" aria-controls="fpc-pubs"><small><span class="toggle-icon">&#9654;</span> 16 papers</small></a></h3>
           <p>Exascale simulations and high-resolution experiments routinely generate data at rates that far exceed available I/O and storage bandwidth, forcing scientists to rely on lossy compression.  Generic error-bounded compressors guarantee pointwise error, but they can silently destroy the topological and structural features (critical points, Morse&ndash;Smale complexes, contour trees, integral curves, vector field trajectories, spectra, and other quantities of interest) that downstream analyses actually depend on.  Our group develops a family of feature-preserving lossy compressors&mdash;including the TopoSZ, MSz, TspSZ, TFZ, FFCz, EXaCTz, and related tools&mdash;that augment state-of-the-art SZ/ZFP-style compressors with provable guarantees on the preservation of these features, while remaining competitive in compression ratio and throughput on CPU, GPU, and distributed-memory systems.  This line of work is conducted with collaborators at Argonne, Utah, Missouri S&amp;T, and others, and is applied to fusion, climate, cosmology, fluid dynamics, and materials science datasets.</p>
 
-          <ul>
+          <ul id="fpc-pubs" class="collapse in">
             <li><p><div align="left">Yuxiao Li, Xin Liang, Bei Wang, and <b>Hanqi Guo</b><br>
             Preserving Discrete Morse&ndash;Smale Complexes in Error-Bounded Lossy Compression<br>
             <em>IEEE Transactions on Visualization and Computer Graphics</em>, 2026. (In Press)<br>
@@ -366,10 +389,10 @@
           <hr class="featurette-divider">
 
 
-          <h3 id="reduction">Data reduction and compression</h3>
+          <h3 id="reduction">Data reduction and compression <a class="section-toggle collapsed" data-toggle="collapse" href="#reduction-pubs" aria-expanded="false" aria-controls="reduction-pubs"><small><span class="toggle-icon">&#9654;</span> 4 papers</small></a></h3>
           <p>Beyond the feature-preserving line of work above, our group contributes to the broader scientific data-reduction toolchain: error-bounded lossy compressors that achieve high compression ratios on regular and unstructured grids, frameworks for assessing compression quality, and reuse-oriented schemes that share derived data products such as integral curves across multiple visualization tasks.  These efforts are conducted in close collaboration with the SZ ecosystem at Argonne and partner institutions.</p>
 
-          <ul>
+          <ul id="reduction-pubs" class="collapse">
             <li><p><div align="left">Xin Liang, <b>Hanqi Guo</b>, Sheng Di, Franck Cappello, Mukund Raj, Chunhui Liu, Kenji Ono, Zizhong Chen, and Tom Peterka<br>
             Toward Feature Preserving 2D and 3D Vector Field Compression<br>
             In <em>Proceedings of IEEE Pacific Visualization Symposium</em>, Tianjin, China, June 3-5, pages 81-90, 2020.<br>
@@ -403,10 +426,10 @@
 
 
 
-          <h3 id="uncertainty">Uncertainty and ensemble visualization</h3>
+          <h3 id="uncertainty">Uncertainty and ensemble visualization <a class="section-toggle collapsed" data-toggle="collapse" href="#uncertainty-pubs" aria-expanded="false" aria-controls="uncertainty-pubs"><small><span class="toggle-icon">&#9654;</span> 8 papers</small></a></h3>
           <p>Scientific simulations and observational data are inherently uncertain&mdash;driven by stochastic forcings, ensemble parameter sweeps, or measurement noise&mdash;and faithfully visualizing this uncertainty is essential for trustworthy scientific decision-making.  We develop uncertainty-aware feature-extraction and tracking algorithms (Lagrangian coherent structures, particle traces, surface density estimates) and comparative visualization techniques for large ensembles of simulation data, with applications in weather forecasting, atmospheric science, and unsteady flow analysis.</p>
 
-          <ul>
+          <ul id="uncertainty-pubs" class="collapse">
             <li><p><div align="left"><b>Hanqi Guo</b>, Wenbin He, Sangmin Seo, Han-Wei Shen, Emil Mihai Constantinescu, Chunhui Liu, and Tom Peterka<br>
             Extreme-Scale Stochastic Particle Tracing for Uncertain Unsteady Flow Visualization and Analysis<br>
             <em>IEEE Transactions on Visualization and Computer Graphics</em>, 25(9):2710-2724, 2019.<br>
@@ -465,10 +488,10 @@
           <hr class="featurette-divider">
 
 
-          <h3 id="flow">Flow visualization</h3>
+          <h3 id="flow">Flow visualization <a class="section-toggle collapsed" data-toggle="collapse" href="#flow-pubs" aria-expanded="false" aria-controls="flow-pubs"><small><span class="toggle-icon">&#9654;</span> 10 papers</small></a></h3>
           <p>Flow visualization conveys the structure and dynamics of vector fields produced by fluid, plasma, and atmospheric simulations.  Our research in this area spans particle-tracing algorithms (stochastic, parallel, and load-balanced), data-reduction strategies tailored to integral curves, comparative analysis of vector field ensembles, and learned representations of flow fields.</p>
 
-          <ul>
+          <ul id="flow-pubs" class="collapse">
             <li><p><div align="left"><b>Hanqi Guo</b>, Wenbin He, Sangmin Seo, Han-Wei Shen, Emil Mihai Constantinescu, Chunhui Liu, and Tom Peterka<br>
             Extreme-Scale Stochastic Particle Tracing for Uncertain Unsteady Flow Visualization and Analysis<br>
             <em>IEEE Transactions on Visualization and Computer Graphics</em>, 25(9):2710-2724, 2019.<br>
@@ -543,10 +566,10 @@
           </ul>
           <hr class="featurette-divider">
 
-          <h3 id="volume">Volume visualization</h3>
+          <h3 id="volume">Volume visualization <a class="section-toggle collapsed" data-toggle="collapse" href="#volume-pubs" aria-expanded="false" aria-controls="volume-pubs"><small><span class="toggle-icon">&#9654;</span> 9 papers</small></a></h3>
           <p>Volume visualization renders 3D scalar and multivariate fields directly to reveal the interior structure of scientific data.  We have developed the WYSIWYG (<em>What You See Is What You Get</em>) family of methods, which lets users specify what they want to see by directly manipulating the rendered image, together with high-dimensional transfer-function design schemes based on dimension projection and parallel coordinates, with applications in biomedical imaging and seismic interpretation.</p>
 
-          <ul>
+          <ul id="volume-pubs" class="collapse">
             <li><p><div align="left"><b>Hanqi Guo</b>, Ningyu Mao, and Xiaoru Yuan<br>
             WYSIWYG (What You See is What You Get) Volume Visualization<br>
             <em>IEEE Transactions on Visualization and Computer Graphics (VIS '11)</em>, 17(12):2106-2114, 2011.<br>
@@ -619,10 +642,10 @@
 
 
 
-          <h3 id="vast">Visual analytics</h3>
+          <h3 id="vast">Visual analytics <a class="section-toggle collapsed" data-toggle="collapse" href="#vast-pubs" aria-expanded="false" aria-controls="vast-pubs"><small><span class="toggle-icon">&#9654;</span> 7 papers</small></a></h3>
           <p>Visual analytics combines interactive visualization with statistical and machine-learning models to help domain experts make sense of complex, heterogeneous datasets.  Our work in this space develops tailored systems for analyzing supercomputer fault and resilience data (the La VALSE system, applied to Argonne's Blue Gene/Q logs), urban traffic trajectories, and seismic and ionospheric observations, with an emphasis on scalability to long time series and large event logs.</p>
 
-          <ul>
+          <ul id="vast-pubs" class="collapse">
             <li><p><div align="left"><b>Hanqi Guo</b>, Zuchao Wang, Bowen Yu, Huijing Zhao, and Xiaoru Yuan<br>
             TripVista: Triple Perspective Visual Trajectory Analytics and Its Application on Microscopic Traffic Data at a Road Intersection<br>
             In <em>Proceedings of IEEE Pacific Visualization Symposium (PacificVis 2011)</em>, pages 163-170, Hong Kong, Mar 1-4, 2011.<br>
@@ -712,5 +735,18 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      // Auto-expand a section when navigated to via hash (sidebar links, deep links).
+      function expandHashSection() {
+        var hash = window.location.hash;
+        if (!hash || hash === '#') return;
+        var pubs = document.querySelector(hash + '-pubs');
+        if (pubs && !pubs.classList.contains('in')) {
+          $(pubs).collapse('show');
+        }
+      }
+      window.addEventListener('hashchange', expandHashSection);
+      $(function () { expandHashSection(); });
+    </script>
   </body>
 </html>
