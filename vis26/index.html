@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Half-day IEEE VIS 2026 tutorial on lossy compression of scientific data: principles, compressors, feature preservation, and what compression does to visualization. Boston, November 12, 2026.">
+<title>Lossy Compression for Scientific Data · IEEE VIS 2026 Tutorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Luminous Modern Light Theme */
+  --paper: #FFFFFF;
+  --paper-gradient: radial-gradient(1200px 650px at 50% -60px, rgba(56, 189, 248, 0.12), rgba(37, 99, 235, 0.07) 45%, transparent 75%),
+                    radial-gradient(800px 500px at 92% 350px, rgba(139, 92, 246, 0.05), transparent 70%),
+                    radial-gradient(600px 600px at 8% 850px, rgba(6, 182, 212, 0.05), transparent 65%),
+                    #FAFCFF;
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFC;
+  --surface-3: #F1F5F9;
+  --surface-tint: #F0F7FF;
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --muted: #64748B;
+  --line: #E2E8F0;
+  --line-strong: #CBD5E1;
+  --line-subtle: #F1F5F9;
+
+  --accent: #2563EB;
+  --accent-light: #3B82F6;
+  --accent-deep: #1D4ED8;
+  --accent-soft: #EFF6FF;
+  --accent-glow: rgba(37, 99, 235, 0.16);
+
+  --cyan: #0284C7;
+  --cyan-soft: #E0F2FE;
+  --purple: #7C3AED;
+  --purple-soft: #F3E8FF;
+  --amber: #D97706;
+  --amber-soft: #FEF3C7;
+  --emerald: #059669;
+  --emerald-soft: #D1FAE5;
+
+  --btn-fg: #FFFFFF;
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --font-display: 'IBM Plex Sans Condensed', system-ui, sans-serif;
+  --font-body: 'IBM Plex Serif', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  --wrap: 1140px;
+}
+
+[data-theme="dark"]{
+  color-scheme: dark;
+  --paper: #0B1120;
+  --paper-gradient: radial-gradient(1000px 600px at 50% -100px, rgba(37, 99, 235, 0.24), rgba(56, 189, 248, 0.09) 50%, transparent 80%),
+                    radial-gradient(800px 500px at 85% 350px, rgba(139, 92, 246, 0.12), transparent 70%),
+                    radial-gradient(600px 600px at 15% 750px, rgba(6, 182, 212, 0.10), transparent 65%),
+                    #0B1120;
+  --surface: #131D31;
+  --surface-2: #1E293B;
+  --surface-3: #334155;
+  --surface-tint: #192742;
+  --ink: #F8FAFC;
+  --ink-2: #CBD5E1;
+  --muted: #94A3B8;
+  --line: #1E293B;
+  --line-strong: #334155;
+  --line-subtle: #162032;
+
+  --accent: #38BDF8;
+  --accent-light: #60A5FA;
+  --accent-deep: #0284C7;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --accent-glow: rgba(56, 189, 248, 0.25);
+
+  --cyan: #38BDF8;
+  --cyan-soft: rgba(56, 189, 248, 0.14);
+  --purple: #A78BFA;
+  --purple-soft: rgba(167, 139, 250, 0.14);
+  --amber: #FBBF24;
+  --amber-soft: rgba(251, 191, 36, 0.14);
+  --emerald: #34D399;
+  --emerald-soft: rgba(52, 211, 153, 0.14);
+
+  --btn-fg: #0B1120;
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]):not([data-theme="dark"]){
+    color-scheme: dark;
+    --paper: #0B1120;
+    --paper-gradient: radial-gradient(1000px 600px at 50% -100px, rgba(37, 99, 235, 0.24), rgba(56, 189, 248, 0.09) 50%, transparent 80%),
+                      radial-gradient(800px 500px at 85% 350px, rgba(139, 92, 246, 0.12), transparent 70%),
+                      radial-gradient(600px 600px at 15% 750px, rgba(6, 182, 212, 0.10), transparent 65%),
+                      #0B1120;
+    --surface: #131D31;
+    --surface-2: #1E293B;
+    --surface-3: #334155;
+    --surface-tint: #192742;
+    --ink: #F8FAFC;
+    --ink-2: #CBD5E1;
+    --muted: #94A3B8;
+    --line: #1E293B;
+    --line-strong: #334155;
+    --line-subtle: #162032;
+
+    --accent: #38BDF8;
+    --accent-light: #60A5FA;
+    --accent-deep: #0284C7;
+    --accent-soft: rgba(56, 189, 248, 0.12);
+    --accent-glow: rgba(56, 189, 248, 0.25);
+
+    --cyan: #38BDF8;
+    --cyan-soft: rgba(56, 189, 248, 0.14);
+    --purple: #A78BFA;
+    --purple-soft: rgba(167, 139, 250, 0.14);
+    --amber: #FBBF24;
+    --amber-soft: rgba(251, 191, 36, 0.14);
+    --emerald: #34D399;
+    --emerald-soft: rgba(52, 211, 153, 0.14);
+
+    --btn-fg: #0B1120;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin: 0;
+  background: var(--paper-gradient);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17.5px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+img{max-width:100%;height:auto;display:block}
+[hidden]{display:none!important}
+
+a{color:var(--accent-deep);text-decoration-thickness:1px;text-underline-offset:3px;transition:color 0.18s ease}
+[data-theme="dark"] a{color:var(--accent)}
+a:hover{color:var(--accent-light)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-0.01em}
+p{margin:0}
+
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:24px}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;
+  top:env(safe-area-inset-top, 0px);
+  z-index:100;
+  background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:saturate(1.8) blur(16px);
+  border-bottom:1px solid var(--line);
+  box-shadow:var(--shadow-sm);
+  transition:border-color 0.2s ease, background 0.2s ease;
+}
+.nav-in{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding-block:12px}
+.nav-brand{
+  display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;
+}
+.nav-badge{
+  font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--accent);background:var(--accent-soft);
+  padding:3px 10px;border-radius:20px;border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.nav-title{
+  font-family:var(--font-display);font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:.01em;
+}
+.nav-links{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px}
+.nav a.link{
+  font-family:var(--font-sans);font-size:14.5px;font-weight:500;
+  color:var(--ink-2);text-decoration:none;padding:5px 9px;border-radius:var(--radius-sm);
+  transition:color 0.15s ease, background 0.15s ease;
+}
+.nav a.link:hover{color:var(--accent);background:var(--accent-soft)}
+
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:var(--radius-sm);
+  background:var(--surface-2);border:1px solid var(--line);
+  color:var(--ink-2);cursor:pointer;transition:all 0.18s ease;padding:0;
+}
+.theme-toggle:hover{background:var(--surface-3);color:var(--accent);border-color:var(--line-strong)}
+.theme-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- masthead ---------- */
+.masthead{padding-block:clamp(40px,7vw,70px) 24px}
+.hero-tagline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);
+}
+.eyebrow-pill{
+  font-size:11px;font-weight:600;background:var(--cyan-soft);color:var(--cyan);
+  padding:2px 8px;border-radius:12px;border:1px solid color-mix(in srgb, var(--cyan) 25%, transparent);
+}
+h1{
+  font-size:clamp(34px, 5.6vw, 56px);font-weight:700;line-height:1.08;
+  background:linear-gradient(135deg, var(--ink) 30%, color-mix(in srgb, var(--accent) 80%, var(--ink)) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+[data-theme="dark"] h1{
+  background:linear-gradient(135deg, #FFFFFF 40%, var(--accent-light) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.subtitle{
+  font-family:var(--font-display);font-weight:500;font-size:clamp(20px, 2.7vw, 27px);
+  color:var(--ink-2);line-height:1.26;margin-top:12px;max-width:32ch;
+}
+.byline{margin-top:20px;font-family:var(--font-sans);font-size:16px;color:var(--ink-2);max-width:76ch;line-height:1.6}
+.byline strong{font-weight:600;color:var(--ink)}
+.byline .author-item{display:inline-block;white-space:nowrap}
+.byline .sep{color:var(--line-strong);padding-inline:6px}
+
+/* facts grid */
+.facts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;margin-top:30px;
+}
+.fact{
+  background:var(--surface);border:1px solid var(--line);
+  padding:16px 20px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+  transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position:relative;overflow:hidden;
+}
+.fact::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg, var(--accent), var(--cyan));
+  opacity:0.85;
+}
+.fact:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-strong)}
+.fact dt{
+  font-family:var(--font-mono);font-size:11.5px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px;
+}
+.fact dd{
+  margin:6px 0 0;font-family:var(--font-display);font-weight:700;font-size:19px;
+  line-height:1.25;color:var(--ink);
+}
+.fact dd .sm{display:block;font-family:var(--font-sans);font-weight:500;font-size:13.5px;color:var(--muted);margin-top:3px}
+
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--font-sans);font-weight:600;font-size:15px;
+  padding:10px 22px;border-radius:var(--radius-md);text-decoration:none;
+  background:linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color:var(--btn-fg);box-shadow:0 3px 12px rgba(37,99,235,0.28);
+  border:1px solid transparent;transition:all 0.18s ease;cursor:pointer;
+}
+.btn:hover{background:linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);box-shadow:0 6px 18px rgba(37,99,235,0.36);transform:translateY(-1px);color:var(--btn-fg)}
+.btn.ghost{
+  background:var(--surface);color:var(--ink-2);border:1px solid var(--line-strong);box-shadow:var(--shadow-sm);
+}
+.btn.ghost:hover{
+  background:var(--surface-tint);border-color:var(--accent);color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-1px);
+}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2}
+
+/* ---------- blended teaser figure ---------- */
+.teaser-figure{
+  position:relative;
+  margin:32px auto 0;
+  text-align:center;
+  max-width:900px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.teaser-figure::before{
+  content:'';
+  position:absolute;
+  top:46%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:88%;
+  height:75%;
+  background:radial-gradient(ellipse at center, rgba(56, 189, 248, 0.22) 0%, rgba(37, 99, 235, 0.08) 45%, transparent 74%);
+  filter:blur(38px);
+  z-index:0;
+  pointer-events:none;
+}
+[data-theme="dark"] .teaser-figure::before{
+  background:radial-gradient(ellipse at center, rgba(56, 189, 248, 0.28) 0%, rgba(139, 92, 246, 0.14) 48%, transparent 76%);
+  filter:blur(42px);
+}
+.teaser-img{
+  position:relative;
+  z-index:1;
+  cursor:zoom-in;
+  transition:transform 0.25s ease, filter 0.25s ease;
+  display:inline-block;
+  width:100%;
+  max-width:840px;
+  -webkit-mask-image:radial-gradient(ellipse 92% 82% at 50% 48%, black 50%, rgba(0,0,0,0.65) 72%, transparent 95%);
+  mask-image:radial-gradient(ellipse 92% 82% at 50% 48%, black 50%, rgba(0,0,0,0.65) 72%, transparent 95%);
+}
+.teaser-img:hover{
+  transform:scale(1.015);
+  -webkit-mask-image:radial-gradient(ellipse 94% 84% at 50% 48%, black 55%, rgba(0,0,0,0.7) 76%, transparent 96%);
+  mask-image:radial-gradient(ellipse 94% 84% at 50% 48%, black 55%, rgba(0,0,0,0.7) 76%, transparent 96%);
+}
+.teaser-img img{
+  width:100%;
+  height:auto;
+  margin-inline:auto;
+  filter:drop-shadow(0 16px 36px rgba(0,0,0,0.08));
+}
+[data-theme="dark"] .teaser-img img{
+  filter:drop-shadow(0 16px 38px rgba(56,189,248,0.18));
+}
+.teaser-caption{
+  position:relative;
+  z-index:1;
+  margin-top:12px;
+  font-family:var(--font-sans);
+  font-size:13.5px;
+  line-height:1.55;
+  color:var(--muted);
+  text-align:center;
+  max-width:760px;
+}
+.teaser-caption strong{color:var(--ink-2);font-weight:600}
+.teaser-caption a{color:var(--accent);text-decoration:none}
+.teaser-caption a:hover{text-decoration:underline}
+
+/* ---------- sections ---------- */
+section{padding-block:clamp(44px,6vw,70px);border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px}
+.sec-num{
+  font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--accent);
+  background:var(--accent-soft);padding:3px 8px;border-radius:6px;letter-spacing:.06em;
+}
+h2{font-size:clamp(26px,3.8vw,36px);letter-spacing:-.015em;font-weight:700;color:var(--ink)}
+h3{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--ink)}
+.lede{font-size:19px;max-width:72ch;color:var(--ink-2);line-height:1.6}
+.prose p + p{margin-top:16px}
+.prose{max-width:70ch}
+
+.two{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:start}
+@media (max-width:860px){.two{grid-template-columns:1fr;gap:32px}}
+
+.panel{
+  background:var(--surface);border:1px solid var(--line);padding:24px 26px;
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+}
+.panel h3{margin-bottom:14px}
+.panel ul{margin:0;padding-left:20px}
+.panel li + li{margin-top:10px}
+.panel li strong{font-weight:600;color:var(--ink)}
+
+/* level bar */
+.levels{margin-top:20px}
+.level-bar{display:flex;height:18px;border-radius:9px;border:1px solid var(--line-strong);overflow:hidden;background:var(--surface-3)}
+.level-bar span{display:block;transition:width 0.3s ease}
+.lv1{background:var(--accent);flex:0 0 60%}
+.lv2{background:var(--cyan);opacity:0.85;flex:0 0 30%}
+.lv3{background:var(--purple);opacity:0.8;flex:0 0 10%}
+.level-key{
+  display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:12px;
+  font-family:var(--font-sans);font-size:13px;color:var(--muted);
+}
+.level-key b{color:var(--ink);font-weight:600}
+.level-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+
+/* ---------- schedule ---------- */
+.block{
+  border:1px solid var(--line);background:var(--surface);margin-bottom:22px;
+  border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.block-head{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;
+  padding:16px 22px;border-bottom:1px solid var(--line);background:var(--surface-tint);
+}
+.block-head h3{font-size:19px;font-weight:700}
+.block-time{
+  font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent-deep);
+  background:var(--surface);padding:4px 10px;border-radius:var(--radius-sm);border:1px solid var(--line);
+}
+[data-theme="dark"] .block-time{color:var(--accent)}
+
+.slot{
+  display:grid;grid-template-columns:92px 1fr auto;gap:8px 18px;
+  padding:15px 22px;border-top:1px solid var(--line);align-items:baseline;
+  transition:background 0.15s ease;
+}
+.slot:first-of-type{border-top:0}
+.slot:hover{background:var(--surface-2)}
+.slot-t{font-family:var(--font-mono);font-size:13.5px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.slot-title{font-family:var(--font-display);font-size:18px;font-weight:600;line-height:1.3;color:var(--ink)}
+.slot-title .note{
+  display:block;font-family:var(--font-body);font-weight:400;font-size:15px;color:var(--ink-2);
+  margin-top:4px;line-height:1.52;
+}
+.slot-who{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.who{
+  font-family:var(--font-mono);font-size:11.5px;font-weight:700;letter-spacing:.04em;
+  padding:3px 8px;border-radius:4px;white-space:nowrap;border:1px solid transparent;
+}
+.who-fc{background:var(--accent-soft);color:var(--accent-deep);border-color:color-mix(in srgb, var(--accent) 30%, transparent)}
+.who-pl{background:var(--purple-soft);color:var(--purple);border-color:color-mix(in srgb, var(--purple) 30%, transparent)}
+.who-sd{background:var(--cyan-soft);color:var(--cyan);border-color:color-mix(in srgb, var(--cyan) 30%, transparent)}
+.who-ru{background:var(--emerald-soft);color:var(--emerald);border-color:color-mix(in srgb, var(--emerald) 30%, transparent)}
+.who-hg{background:var(--amber-soft);color:var(--amber);border-color:color-mix(in srgb, var(--amber) 30%, transparent)}
+.who-all{background:var(--surface-3);color:var(--ink-2);border-color:var(--line)}
+
+@media (max-width:680px){
+  .slot{grid-template-columns:1fr auto;gap:4px 12px}
+  .slot-t{grid-column:1/-1;font-size:12.5px;letter-spacing:.04em}
+}
+.break{
+  display:flex;align-items:center;gap:14px;padding:12px 22px;border-top:1px solid var(--line);
+  background:repeating-linear-gradient(135deg,transparent,transparent 7px,var(--surface-2) 7px,var(--surface-2) 14px);
+  font-family:var(--font-mono);font-size:13.5px;color:var(--muted);font-weight:600;
+}
+.legend{
+  display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:18px;
+  font-family:var(--font-sans);font-size:13.5px;color:var(--ink-2);line-height:1.7;
+}
+.legend-item{display:inline-flex;align-items:center;gap:6px}
+
+/* ---------- pipeline ---------- */
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:16px}
+.stage{
+  background:var(--surface);border:1px solid var(--line);padding:22px 24px;
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);position:relative;
+  transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.stage:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--accent)}
+.stage-n{
+  font-family:var(--font-mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;display:inline-flex;align-items:center;gap:6px;
+}
+.stage h4{font-family:var(--font-display);font-size:20px;font-weight:700;margin-top:6px;color:var(--ink)}
+.stage p{font-size:15px;color:var(--ink-2);margin-top:8px;line-height:1.55}
+.stage-out{
+  margin-top:14px;padding-top:10px;border-top:1px dashed var(--line-strong);
+  font-family:var(--font-mono);font-size:12px;color:var(--muted);
+}
+
+/* ---------- topics ---------- */
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-top:20px}
+.topic{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:24px 26px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;
+  transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.topic:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--accent)}
+.topic-n{
+  font-family:var(--font-mono);font-size:11.5px;letter-spacing:.12em;color:var(--accent);
+  font-weight:700;text-transform:uppercase;
+}
+.topic h3{margin-top:8px;font-size:20px;color:var(--ink)}
+.topic p{margin-top:10px;font-size:15.5px;color:var(--ink-2);line-height:1.6;flex-grow:1}
+
+/* ---------- people ---------- */
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:22px;margin-top:18px}
+.person{
+  display:grid;grid-template-columns:60px 1fr;gap:18px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);padding:22px 24px;
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:all 0.2s ease;
+}
+.person:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--line-strong)}
+.mono-badge{
+  width:60px;height:60px;display:grid;place-items:center;border-radius:var(--radius-md);
+  background:linear-gradient(135deg, var(--accent-soft), var(--surface-2));
+  color:var(--accent-deep);border:1px solid var(--line-strong);
+  font-family:var(--font-mono);font-size:18px;font-weight:700;letter-spacing:.04em;
+}
+[data-theme="dark"] .mono-badge{color:var(--accent)}
+.person h3{font-size:20px}
+.person .aff{font-family:var(--font-display);font-size:15px;color:var(--accent-deep);font-weight:600;margin-top:2px}
+[data-theme="dark"] .person .aff{color:var(--accent)}
+.person p.bio{font-size:15px;color:var(--ink-2);margin-top:10px;line-height:1.55}
+.person .mail{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);margin-top:10px;word-break:break-all;display:block}
+.person .mail a{color:inherit;text-decoration:none}
+.person .mail a:hover{color:var(--accent);text-decoration:underline}
+
+/* ---------- software ---------- */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:18px}
+.tool{
+  background:var(--surface);border:1px solid var(--line);padding:20px 22px;
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;transition:all 0.18s ease;
+}
+.tool:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--accent)}
+.tool a.tool-title{
+  font-family:var(--font-display);font-size:19px;font-weight:700;
+  text-decoration:none;color:var(--ink);display:flex;align-items:center;justify-content:space-between;
+}
+.tool a.tool-title:hover{color:var(--accent)}
+.tool p{font-size:14.5px;color:var(--ink-2);margin-top:8px;line-height:1.52;flex-grow:1}
+.tool .host{
+  font-family:var(--font-mono);font-size:12px;color:var(--muted);
+  margin-top:12px;padding-top:8px;border-top:1px dashed var(--line);
+}
+
+/* ---------- reading ---------- */
+.refs-container{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:26px 30px;box-shadow:var(--shadow-sm);margin-top:18px;
+}
+.refs h3{
+  font-family:var(--font-mono);font-size:12.5px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-block:26px 12px;
+}
+.refs h3:first-child{margin-top:0}
+.refs ol{margin:0;padding-left:24px}
+.refs li{margin-bottom:11px;font-size:15px;line-height:1.55;color:var(--ink-2)}
+.refs li em{font-style:italic}
+.refs li .venue{color:var(--muted)}
+.refs li a{color:var(--accent);text-decoration:none}
+.refs li a:hover{text-decoration:underline}
+
+/* ---------- notice ---------- */
+.notice{
+  border-left:4px solid var(--amber);background:var(--amber-soft);
+  padding:18px 22px;border-radius:var(--radius-md);font-size:15.5px;color:var(--ink-2);line-height:1.6;
+}
+.notice strong{font-family:var(--font-display);font-weight:700;color:var(--ink)}
+
+/* ---------- modal / lightbox ---------- */
+.lightbox-overlay{
+  position:fixed;inset:0;background:rgba(11, 17, 32, 0.88);backdrop-filter:blur(8px);
+  z-index:999;display:none;align-items:center;justify-content:center;padding:24px;
+}
+.lightbox-overlay.active{display:flex}
+.lightbox-content{max-width:92vw;max-height:90vh;position:relative}
+.lightbox-content img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:var(--radius-md);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+.lightbox-close{
+  position:absolute;top:-42px;right:0;background:transparent;border:0;color:#FFF;
+  font-size:32px;cursor:pointer;line-height:1;
+}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:40px;padding-block:36px 52px;background:var(--surface)}
+footer p{font-size:15px;color:var(--muted);max-width:76ch;line-height:1.65}
+footer p + p{margin-top:12px}
+.foot-mark{
+  font-family:var(--font-mono);font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a href="#" class="nav-brand">
+      <span class="nav-badge">IEEE VIS 2026</span>
+      <span class="nav-title">Lossy Compression Tutorial</span>
+    </a>
+    <div class="nav-links">
+      <a class="link" href="#about">About</a>
+      <a class="link" href="#schedule">Schedule</a>
+      <a class="link" href="#pipeline">Pipeline</a>
+      <a class="link" href="#topics">Topics</a>
+      <a class="link" href="#speakers">Speakers</a>
+      <a class="link" href="#software">Software</a>
+      <a class="link" href="#reading">Reading</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Masthead -->
+<header class="wrap masthead">
+  <div class="hero-tagline">
+    <div class="eyebrow">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      IEEE VIS 2026 Tutorial
+    </div>
+    <span class="eyebrow-pill">Half-Day Tutorial</span>
+  </div>
+
+  <h1>Lossy Compression for Scientific Data</h1>
+  <p class="subtitle">Principles, Tools, and Implications for Visualization</p>
+  
+  <p class="byline">
+    <span class="author-item"><strong>Franck Cappello</strong> (Argonne)</span><span class="sep">&middot;</span>
+    <span class="author-item"><strong>Peter Lindstrom</strong> (LLNL)</span><span class="sep">&middot;</span>
+    <span class="author-item"><strong>Sheng Di</strong> (Argonne)</span><span class="sep">&middot;</span>
+    <span class="author-item"><strong>Robert Underwood</strong> (Argonne)</span><span class="sep">&middot;</span>
+    <span class="author-item"><strong>Hanqi Guo</strong> (The Ohio State University)</span>
+  </p>
+
+  <dl class="facts">
+    <div class="fact">
+      <dt>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        Date
+      </dt>
+      <dd>Thursday, Nov 12, 2026</dd>
+    </div>
+    <div class="fact">
+      <dt>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        Time
+      </dt>
+      <dd>08:00 &ndash; 11:30 EST<span class="sm">Two 90-min sessions &middot; 30-min break</span></dd>
+    </div>
+    <div class="fact">
+      <dt>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Room &amp; Venue
+      </dt>
+      <dd>Hall St. George A&ndash;B<span class="sm">Boston, MA &middot; IEEE VIS 2026</span></dd>
+    </div>
+    <div class="fact">
+      <dt>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Audience Level
+      </dt>
+      <dd>Introductory to Advanced<span class="sm">60% Beginner &middot; 30% Int. &middot; 10% Adv.</span></dd>
+    </div>
+  </dl>
+
+  <div class="cta">
+    <a class="btn" href="https://ieeevis.org/year/2026/program/session/t-lossy-compression-lossy-compression-1" target="_blank" rel="noopener">
+      <span>Official Session Page</span>
+      <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+    </a>
+    <a class="btn ghost" href="https://ieeevis.org/year/2026/info/registration-and-travel/conference-registration" target="_blank" rel="noopener">
+      <span>Register for VIS 2026</span>
+    </a>
+    <a class="btn ghost" href="#schedule">
+      <span>View Detailed Schedule</span>
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+  </div>
+
+  <!-- The Iconic ZFP Visual Teaser -->
+  <figure class="teaser-figure">
+    <div class="teaser-img" onclick="openLightbox('images/zfp-adaptivity.png', 'Rayleigh-Taylor instability density field compressed using ZFP with varying precision across blocks')">
+      <img src="images/zfp-adaptivity.png" alt="Rayleigh-Taylor instability density field compressed using ZFP with varying precision across blocks" loading="lazy">
+    </div>
+    <figcaption class="teaser-caption">
+      Rayleigh&ndash;Taylor instability density field compressed using <strong>zfp</strong> with spatially varying precision across blocks (<a href="https://doi.org/10.1109/TVCG.2014.2346458" target="_blank" rel="noopener">Peter Lindstrom, IEEE TVCG 2014</a>, 2025 IEEE VIS Test-of-Time Award).
+    </figcaption>
+  </figure>
+</header>
+
+<main>
+
+<!-- Section 01: About -->
+<section id="about" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>About this tutorial</h2>
+  </div>
+  <div class="two">
+    <div class="prose">
+      <p class="lede">Simulations, observatories, and experiments now produce more data than we can store, move, or explore interactively. Lossy compression shrinks scientific data by 10&times; to 100&times; &mdash; but visualization scientists need to know its impact on visual integrity and analytical correctness.</p>
+      <p>This tutorial equips visualization researchers and practitioners with the deep working knowledge required to incorporate lossy compression into visualization workflows with confidence. We dissect why scientific floating-point data compresses the way it does, inspect the three foundational stages inside every compressor (decorrelation, quantization, and coding), and compare the design principles of the leading compressors: <strong>SZ, ZFP, MGARD, SPERR, and TTHRESH</strong>.</p>
+      <p>Crucially, we tackle the question that matters most to the VIS community: <em>how compression errors propagate through rendering, feature extraction, and analysis pipelines</em>. We demonstrate where standard pointwise compressors distort isosurfaces, volume renderings, streamlines, and topological structures, and introduce state-of-the-art <strong>feature-preserving and topology-preserving compressors</strong> that provide rigorous guarantees.</p>
+      <p>The tutorial is presented by the leading researchers in scientific data compression, who have collectively developed the most widely used compressors in this domain (SZ and ZFP, both R&amp;D 100 Award winners). This edition builds on highly rated tutorials given at SC17&ndash;25 and ISC17&ndash;22, substantially adapted for the visualization audience.</p>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h3>Who should attend</h3>
+        <ul>
+          <li><strong>Visualization researchers &amp; practitioners</strong> who handle massive scientific datasets and need to safeguard visual quality and topological integrity.</li>
+          <li><strong>Application scientists</strong> running simulations, experiments, or AI workloads who face critical I/O, transfer, and storage bottlenecks.</li>
+          <li><strong>Graduate students</strong> learning about scientific data visualization, data reduction techniques, or designing novel compressors.</li>
+          <li><strong>Infrastructure &amp; tool developers</strong> integrating reduction into visualization software, I/O libraries (HDF5, ADIOS), or in situ analysis pipelines.</li>
+        </ul>
+      </div>
+
+      <div class="panel" style="margin-top:20px">
+        <h3>Prerequisites</h3>
+        <p style="font-size:15px;color:var(--ink-2)">A basic understanding of scientific visualization concepts (scalar/vector fields, volume rendering, isosurfaces). No prior expertise in data compression is assumed.</p>
+        <div class="levels">
+          <div class="level-bar" role="img" aria-label="Level: 60% beginner, 30% intermediate, 10% advanced">
+            <span class="lv1"></span><span class="lv2"></span><span class="lv3"></span>
+          </div>
+          <div class="level-key">
+            <span><span class="level-dot" style="background:var(--accent)"></span><b>60%</b> Beginner</span>
+            <span><span class="level-dot" style="background:var(--cyan)"></span><b>30%</b> Intermediate</span>
+            <span><span class="level-dot" style="background:var(--purple)"></span><b>10%</b> Advanced</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 02: Schedule -->
+<section id="schedule" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>Schedule</h2>
+  </div>
+  <p class="lede" style="margin-bottom:22px">
+    Thursday, November 12, 2026, in <strong>Hall St. George A&ndash;B</strong> (08:00&ndash;11:30 EST). The tutorial provides an intensive half-day program combining fundamental compression principles, state-of-the-art compressors, live interactive demonstrations, and visualization-specific feature preservation.
+  </p>
+
+  <div class="block">
+    <div class="block-head">
+      <h3>Session I &mdash; Fundamentals &amp; Leading Compressors</h3>
+      <span class="block-time">08:00 &ndash; 09:30</span>
+    </div>
+    <div class="slot">
+      <span class="slot-t">08:00 &ndash; 08:15</span>
+      <div class="slot-title">
+        Opening and Motivation
+        <span class="note">The data deluge in scientific simulations, experiments, and AI. Use cases, storage footprints, I/O bottlenecks, and why scientific data needs specialized lossy reduction.</span>
+      </div>
+      <div class="slot-who"><span class="who who-fc" title="Franck Cappello">FC</span></div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">08:15 &ndash; 08:45</span>
+      <div class="slot-title">
+        How Lossy Compression Works
+        <span class="note">The three fundamental stages: decorrelation/conditioning (prediction, transforms, tensor decomposition), reduction (quantization, thresholding), and entropy coding. Trade-offs and downstream implications.</span>
+      </div>
+      <div class="slot-who"><span class="who who-pl" title="Peter Lindstrom">PL</span></div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">08:45 &ndash; 09:15</span>
+      <div class="slot-title">
+        State-of-the-Art Compressors: SZ, ZFP, MGARD, SPERR
+        <span class="note">Deep dive into leading generic compressors: SZ prediction models, ZFP block-based orthogonal transforms, MGARD multigrid wavelet decomposition, and SPERR rate-distortion optimizations.</span>
+      </div>
+      <div class="slot-who">
+        <span class="who who-sd" title="Sheng Di">SD</span>
+        <span class="who who-pl" title="Peter Lindstrom">PL</span>
+      </div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">09:15 &ndash; 09:30</span>
+      <div class="slot-title">
+        Live Demonstration of Compressors
+        <span class="note">Live compression of reference scientific datasets (Nyx cosmology, Hurricane Isabel, Miranda turbulent mixing) across multiple compressors and parameter spaces.</span>
+      </div>
+      <div class="slot-who"><span class="who who-ru" title="Robert Underwood">RU</span></div>
+    </div>
+  </div>
+
+  <div class="break">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+    <span>09:30 &ndash; 10:00</span>
+    <span>Coffee Break &amp; Networking</span>
+  </div>
+
+  <div class="block" style="margin-top:22px">
+    <div class="block-head">
+      <h3>Session II &mdash; Compression for Visualization &amp; Customization</h3>
+      <span class="block-time">10:00 &ndash; 11:30</span>
+    </div>
+    <div class="slot">
+      <span class="slot-t">10:00 &ndash; 10:35</span>
+      <div class="slot-title">
+        Impact on Visualization Quality and Feature Preservation
+        <span class="note">Distortions in volume rendering, isosurfaces, and streamlines. Novel feature-preserving compressors: TopoSZ (contour trees), MSz &amp; pMSz (Morse-Smale segmentations), vector-field critical points, and spectrum-preserving FFCz.</span>
+      </div>
+      <div class="slot-who"><span class="who who-hg" title="Hanqi Guo">HG</span></div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">10:35 &ndash; 10:55</span>
+      <div class="slot-title">
+        Error Assessment, Trust, and Progressive Retrieval
+        <span class="note">Beyond PSNR and SSIM: error autocorrelation, derivative preservation, and physically motivated metrics. Progressive compression and level-of-detail rendering for interactive exploration.</span>
+      </div>
+      <div class="slot-who">
+        <span class="who who-fc" title="Franck Cappello">FC</span>
+        <span class="who who-pl" title="Peter Lindstrom">PL</span>
+      </div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">10:55 &ndash; 11:15</span>
+      <div class="slot-title">
+        LibPressio and the FZ Customization Framework
+        <span class="note">Unifying 30+ compressors with LibPressio, automated configuration tuning with OptZConfig, and synthesizing domain-specialized compressors using the FZ cyberinfrastructure framework.</span>
+      </div>
+      <div class="slot-who">
+        <span class="who who-ru" title="Robert Underwood">RU</span>
+        <span class="who who-hg" title="Hanqi Guo">HG</span>
+      </div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">11:15 &ndash; 11:30</span>
+      <div class="slot-title">
+        Open Discussion, Hands-On Q&amp;A, and Closing Remarks
+        <span class="note">Interactive discussion with all presenters; feedback on attendee workflows, data reduction questions, and next-generation research opportunities.</span>
+      </div>
+      <div class="slot-who"><span class="who who-all">All Presenters</span></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="who who-fc">FC</span> Franck Cappello</div>
+    <div class="legend-item"><span class="who who-pl">PL</span> Peter Lindstrom</div>
+    <div class="legend-item"><span class="who who-sd">SD</span> Sheng Di</div>
+    <div class="legend-item"><span class="who who-ru">RU</span> Robert Underwood</div>
+    <div class="legend-item"><span class="who who-hg">HG</span> Hanqi Guo</div>
+  </div>
+</section>
+
+<!-- Section 03: Pipeline -->
+<section id="pipeline" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>Inside a lossy compressor</h2>
+  </div>
+  <p class="lede" style="margin-bottom:22px">
+    Almost all modern lossy compressors for numerical scientific data follow a modular three-stage architecture. The techniques selected for each stage determine the compression speed, ratio, and crucially, which visual and topological features survive.
+  </p>
+
+  <div class="pipe">
+    <div class="stage">
+      <span class="stage-n">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        Stage 1
+      </span>
+      <h4>Decorrelation</h4>
+      <p>Reorganizes and conditions the data field via prediction, mathematical transforms, or multi-dimensional decomposition to eliminate spatial and inter-variable redundancy before reduction.</p>
+      <p class="stage-out">prediction &middot; transforms &middot; tensor decomposition</p>
+    </div>
+    <div class="stage">
+      <span class="stage-n">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Stage 2
+      </span>
+      <h4>Reduction</h4>
+      <p>Discards non-critical information under user-defined error bounds (absolute, relative, or feature-based). This is the only lossy stage, and it is where visual distortion and feature artifacts arise.</p>
+      <p class="stage-out">quantization &middot; filtering &middot; bit truncation</p>
+    </div>
+    <div class="stage">
+      <span class="stage-n">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+        Stage 3
+      </span>
+      <h4>Coding</h4>
+      <p>Losslessly compresses quantized symbols and residual representations by exploiting entropy and repetitive structural patterns to minimize final bitstream size.</p>
+      <p class="stage-out">run-length &middot; Huffman / arithmetic &middot; embedded</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 04: Topics -->
+<section id="topics" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>What we cover</h2>
+  </div>
+  <p class="lede" style="margin-bottom:24px">
+    The tutorial covers six comprehensive topics connecting foundational information theory with cutting-edge visualization and feature-preservation algorithms.
+  </p>
+
+  <div class="topics">
+    <!-- Topic 1 -->
+    <div class="topic">
+      <span class="topic-n">TOPIC 01</span>
+      <h3>Why lossy compression &amp; use cases</h3>
+      <p>Motivation across simulations, physical experiments, and AI workloads. Limits of lossless compression on scientific floating-point data, role of Shannon entropy, smoothness, and redundancy. How lossy compression not only solves storage bottlenecks but cuts I/O times, accelerates in situ visualization, and enables massive scale-up.</p>
+    </div>
+
+    <!-- Topic 2 -->
+    <div class="topic">
+      <span class="topic-n">TOPIC 02</span>
+      <h3>How lossy compression works</h3>
+      <p>Principles of decorrelation, reduction, and coding stages in detail. Theoretical trade-offs between prediction-based schemes, transform-based methods, and tensor decompositions, and how these mathematical choices propagate into rendering artifacts and analytical distortion.</p>
+    </div>
+
+    <!-- Topic 3 -->
+    <div class="topic">
+      <span class="topic-n">TOPIC 03</span>
+      <h3>State-of-the-art generic compressors</h3>
+      <p>SZ3, ZFP, MGARD, SPERR, and TTHRESH: design motivations, internal algorithms, throughput benchmarks, and rate&ndash;distortion curves. How to harness <strong>LibPressio</strong> to access 30+ compressors through a single API and use <strong>OptZConfig</strong> to search optimal parameter spaces under quality constraints.</p>
+    </div>
+
+    <!-- Topic 4 -->
+    <div class="topic" style="border-color:color-mix(in srgb, var(--accent) 50%, var(--line))">
+      <span class="topic-n" style="color:var(--accent)">TOPIC 04 &middot; KEY VIS TOPIC</span>
+      <h3>Impact on visualization &amp; feature preservation</h3>
+      <p>How compression affects volume rendering, isosurface extraction, streamlines, and topological analysis. Why pointwise error bounds fail to preserve scientific features, and how new feature-preserving compressors solve this: <strong>TopoSZ</strong> for contour trees, <strong>MSz</strong> for Morse&ndash;Smale segmentations, adaptive per-vertex bounds for vector fields, and <strong>FFCz</strong> for Fourier spectra.</p>
+    </div>
+
+    <!-- Topic 5 -->
+    <div class="topic">
+      <span class="topic-n">TOPIC 05</span>
+      <h3>Error assessment and trust</h3>
+      <p>Comprehensive error metrics beyond PSNR and SSIM: error autocorrelation, derivative preservation, and physically motivated metrics. Evaluating visual distortion directly rather than raw field residuals. Progressive compression and retrieval for interactive level-of-detail visualization.</p>
+    </div>
+
+    <!-- Topic 6 -->
+    <div class="topic" style="border-color:color-mix(in srgb, var(--purple) 50%, var(--line))">
+      <span class="topic-n" style="color:var(--purple)">TOPIC 06 &middot; FRAMEWORK</span>
+      <h3>Customizing with the FZ framework</h3>
+      <p>Generic compressors are one-size-fits-all and leave significant performance and fidelity on the table. The FZ cyberinfrastructure framework empowers users to synthesize customized compressors for specific scientific domains and visualization pipelines, achieving 2&times;&ndash;17&times; higher compression ratios with verified feature fidelity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 05: Materials & Hands-on -->
+<section id="materials" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>Materials &amp; hands-on resources</h2>
+  </div>
+  <div class="two">
+    <div class="prose">
+      <p class="lede">All tutorial slides, hands-on notebooks, Docker environments, and test datasets are fully open source and will be made publicly available to attendees.</p>
+      <div class="notice" style="margin-top:18px">
+        <p><strong>Slides &amp; Course Notes:</strong> Tutorial notes will consist of complete slide decks for every talk and an extensive bibliography. Attendees are warmly encouraged to bring their own simulation or experimental datasets to discuss reduction configurations with the compressor developers!</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Hands-on environment</h3>
+      <ul>
+        <li><strong>Pre-built Docker container:</strong> Pre-configured with SZ3, ZFP, MGARD, SPERR, TTHRESH, LibPressio, QCAT, and Python/Jupyter bindings.</li>
+        <li><strong>Benchmark Datasets:</strong> Real-world scientific data from <strong>SDRBench</strong>, spanning cosmology (Nyx, HACC), climate (Hurricane, CESM), combustion (S3D), and molecular dynamics.</li>
+        <li><strong>Interactive Exercises:</strong> Compare rate-distortion curves, extract isosurfaces on compressed vs. uncompressed fields, and test topology preservation in real time.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Section 06: Presenters -->
+<section id="speakers" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>Presenters</h2>
+  </div>
+  <p class="lede" style="margin-bottom:22px">
+    The tutorial is led by the creators and key architects of the foremost scientific data compressors, with decades of collective experience across HPC and visualization.
+  </p>
+
+  <div class="people">
+    <!-- Franck Cappello -->
+    <div class="person">
+      <div class="mono-badge" aria-hidden="true" style="color:var(--accent);border-color:color-mix(in srgb, var(--accent) 35%, transparent)">FC</div>
+      <div>
+        <h3>Franck Cappello</h3>
+        <p class="aff">Argonne National Laboratory &middot; UIUC</p>
+        <p class="bio">Senior Computer Scientist at Argonne and Adjunct Research Professor at the University of Illinois Urbana-Champaign. IEEE Fellow; recipient of the 2024 IEEE Charles Babbage Award, the 2022 ACM HPDC Achievement Award, and two R&amp;D 100 Awards. Co-developer of SZ, and lead of the compression tutorials at SC and ISC since 2017.</p>
+        <span class="mail"><a href="mailto:cappello@mcs.anl.gov">cappello@mcs.anl.gov</a></span>
+      </div>
+    </div>
+
+    <!-- Peter Lindstrom -->
+    <div class="person">
+      <div class="mono-badge" aria-hidden="true" style="color:var(--purple);border-color:color-mix(in srgb, var(--purple) 35%, transparent)">PL</div>
+      <div>
+        <h3>Peter Lindstrom</h3>
+        <p class="aff">Lawrence Livermore National Laboratory</p>
+        <p class="bio">Distinguished Member of Technical Staff at LLNL and creator of the ZFP floating-point compressor (2023 R&amp;D 100 Award and 2025 IEEE VIS Test-of-Time Award). Foundational contributions to data compression and progressive data representations. IEEE CS Distinguished Contributor, and co-organizer of compression tutorials since 2017.</p>
+        <span class="mail"><a href="mailto:pl@llnl.gov">pl@llnl.gov</a></span>
+      </div>
+    </div>
+
+    <!-- Sheng Di -->
+    <div class="person">
+      <div class="mono-badge" aria-hidden="true" style="color:var(--cyan);border-color:color-mix(in srgb, var(--cyan) 35%, transparent)">SD</div>
+      <div>
+        <h3>Sheng Di</h3>
+        <p class="aff">Argonne National Laboratory</p>
+        <p class="bio">Computer Scientist at Argonne National Laboratory, key developer of the SZ lossy compressor (R&amp;D 100 Award), and IEEE Senior Member. He has published extensively on error-bounded lossy compression algorithms and has co-organized compression tutorials at SC and ISC since 2017.</p>
+        <span class="mail"><a href="mailto:sdi1@anl.gov">sdi1@anl.gov</a></span>
+      </div>
+    </div>
+
+    <!-- Robert Underwood -->
+    <div class="person">
+      <div class="mono-badge" aria-hidden="true" style="color:var(--emerald);border-color:color-mix(in srgb, var(--emerald) 35%, transparent)">RU</div>
+      <div>
+        <h3>Robert Underwood</h3>
+        <p class="aff">Argonne National Laboratory</p>
+        <p class="bio">Assistant Computer Scientist at Argonne and lead developer of LibPressio, a unified interface to 30+ error-bounded lossy compressors adopted at 17+ institutions, and of OptZConfig for automatic compression parameter optimization. Contributor to the SC compression tutorials since 2022.</p>
+        <span class="mail"><a href="mailto:runderwood@anl.gov">runderwood@anl.gov</a></span>
+      </div>
+    </div>
+
+    <!-- Hanqi Guo -->
+    <div class="person">
+      <div class="mono-badge" aria-hidden="true" style="color:var(--amber);border-color:color-mix(in srgb, var(--amber) 35%, transparent)">HG</div>
+      <div>
+        <h3>Hanqi Guo</h3>
+        <p class="aff">The Ohio State University</p>
+        <p class="bio">Associate Professor of Computer Science and Engineering at The Ohio State University. His research spans scientific visualization, data reduction, and large-scale visual data analysis. Recipient of Best Paper Awards at IEEE VIS, IEEE PacificVis, and IEEE IPDPS for contributions to feature-preserving visualization and data reduction.</p>
+        <span class="mail"><a href="mailto:guo.2154@osu.edu">guo.2154@osu.edu</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 07: Software -->
+<section id="software" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <h2>Software &amp; benchmarks</h2>
+  </div>
+  <p class="lede" style="margin-bottom:22px">All compressors and tools demonstrated in the tutorial are open-source and ready for production deployment.</p>
+  <div class="tools">
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/szcompressor/SZ3" target="_blank" rel="noopener">
+        <span>SZ3</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Modular, prediction-based error-bounded lossy compressor for floating-point and integer scientific fields.</p>
+      <span class="host">github.com/szcompressor/SZ3</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/LLNL/zfp" target="_blank" rel="noopener">
+        <span>ZFP</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Compressed numerical arrays with high-speed random access; fixed-rate, fixed-precision, and fixed-accuracy modes.</p>
+      <span class="host">github.com/LLNL/zfp</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/CODARcode/MGARD" target="_blank" rel="noopener">
+        <span>MGARD</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>MultiGrid Adaptive Reduction of Data, providing rigorous error bounds on derived scientific quantities of interest.</p>
+      <span class="host">github.com/CODARcode/MGARD</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/NCAR/SPERR" target="_blank" rel="noopener">
+        <span>SPERR</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Wavelet-based compressor offering top-tier rate&ndash;distortion performance across 2D and 3D scientific fields.</p>
+      <span class="host">github.com/NCAR/SPERR</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/rballester/tthresh" target="_blank" rel="noopener">
+        <span>TTHRESH</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Higher-order tensor decomposition compressor for multidimensional visual and volumetric datasets.</p>
+      <span class="host">github.com/rballester/tthresh</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/robertu94/libpressio" target="_blank" rel="noopener">
+        <span>LibPressio</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Universal abstraction interface for 30+ lossless and lossy compressors with bindings in C, C++, Python, and Julia.</p>
+      <span class="host">github.com/robertu94/libpressio</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://fzframework.org" target="_blank" rel="noopener">
+        <span>FZ Framework</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Modular cyberinfrastructure framework for synthesizing fine-tunable, specialized lossy compressors.</p>
+      <span class="host">fzframework.org</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/CODARcode/Z-checker" target="_blank" rel="noopener">
+        <span>Z-checker</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Diagnostics suite for assessing compression error: distributions, autocorrelation, derivatives, and spectra.</p>
+      <span class="host">github.com/CODARcode/Z-checker</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://github.com/szcompressor/qcat" target="_blank" rel="noopener">
+        <span>QCAT</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Quick Compression Analysis Toolkit for rapidly computing rate-distortion, PSNR, and SSIM metrics.</p>
+      <span class="host">github.com/szcompressor/qcat</span>
+    </div>
+    <div class="tool">
+      <a class="tool-title" href="https://sdrbench.github.io" target="_blank" rel="noopener">
+        <span>SDRBench</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+      <p>Standard scientific data reduction benchmark datasets from climate, cosmology, fusion, and combustion.</p>
+      <span class="host">sdrbench.github.io</span>
+    </div>
+  </div>
+</section>
+
+<!-- Section 08: Reading List -->
+<section id="reading" class="wrap">
+  <div class="sec-head">
+    <span class="sec-num">08</span>
+    <h2>Reading list &amp; bibliography</h2>
+  </div>
+  <p class="lede" style="margin-bottom:20px">Curated research papers cited in the tutorial proposal and course notes.</p>
+  
+  <div class="refs-container refs">
+    <h3>Core Compressor Foundations</h3>
+    <ol>
+      <li>S. Di and F. Cappello. Fast error-bounded lossy HPC data compression with SZ. <span class="venue">IEEE IPDPS, 730&ndash;739, 2016.</span></li>
+      <li>X. Liang, K. Zhao, S. Di, S. Li, R. Underwood, A. M. Gok, J. Tian, J. Deng, J. C. Calhoun, D. Tao, Z. Chen, and F. Cappello. SZ3: A modular framework for composing prediction-based error-bounded lossy compressors. <span class="venue">IEEE Transactions on Big Data, 2022.</span></li>
+      <li>P. Lindstrom. Fixed-rate compressed floating-point arrays. <span class="venue">IEEE TVCG, 20(12):2674&ndash;2683, 2014.</span> <em>(2025 IEEE VIS Test-of-Time Award)</em></li>
+      <li>R. Ballester-Ripoll, P. Lindstrom, and R. Pajarola. TTHRESH: Tensor compression for multidimensional visual data. <span class="venue">IEEE TVCG, 26(9):2891&ndash;2903, 2020.</span></li>
+      <li>M. Ainsworth, O. Tugluk, B. Whitney, and S. Klasky. Multilevel techniques for compression and reduction of scientific data &mdash; the multivariate case. <span class="venue">SIAM Journal on Scientific Computing, 41(2):A1278&ndash;A1303, 2019. <a href="https://doi.org/10.1137/18M1166651" target="_blank" rel="noopener">doi:10.1137/18M1166651</a></span></li>
+      <li>S. Li, P. Lindstrom, and J. Clyne. Lossy scientific data compression with SPERR. <span class="venue">IEEE IPDPS, 1007&ndash;1017, 2023.</span></li>
+    </ol>
+
+    <h3>Feature &amp; Topology Preservation for Visualization</h3>
+    <ol start="7">
+      <li>L. Yan, X. Liang, H. Guo, and B. Wang. TopoSZ: Preserving topology in error-bounded lossy compression. <span class="venue">IEEE VIS, 2023.</span></li>
+      <li>Y. Li, X. Liang, B. Wang, Y. Qiu, L. Yan, and H. Guo. MSz: An efficient parallel algorithm for correcting Morse&ndash;Smale segmentations in error-bounded lossy compressors. <span class="venue">IEEE TVCG, 31(1):130&ndash;140, 2024.</span></li>
+      <li>Y. Li, M. Xia, X. Liang, B. Wang, and H. Guo. Preserving discrete Morse&ndash;Smale complexes in error-bounded lossy compression. <span class="venue">arXiv:<a href="https://arxiv.org/abs/2409.17346" target="_blank" rel="noopener">2409.17346</a>, 2025.</span></li>
+      <li>Y. Li, M. Xia, X. Liang, B. Wang, R. Underwood, S. Di, H. Sharma, D. Beniwal, F. Cappello, and H. Guo. pMSz: A distributed parallel algorithm for correcting extrema and Morse&ndash;Smale segmentations in lossy compression. <span class="venue">arXiv:<a href="https://arxiv.org/abs/2601.01787" target="_blank" rel="noopener">2601.01787</a>, 2025.</span></li>
+      <li>X. Liang, S. Di, F. Cappello, M. Raj, C. Liu, K. Ono, Z. Chen, T. Peterka, and H. Guo. Toward feature-preserving vector field compression. <span class="venue">IEEE TVCG, 29(12):5434&ndash;5448, 2023.</span></li>
+      <li>C. Ren, R. Underwood, S. Di, E. Kutay, Z. Lukic, A. Yener, F. Cappello, and H. Guo. FFCz: Fast Fourier correction for spectrum-preserving lossy compression of scientific data. <span class="venue">arXiv:<a href="https://arxiv.org/abs/2601.01596" target="_blank" rel="noopener">2601.01596</a>, 2025.</span></li>
+    </ol>
+
+    <h3>Error Assessment, Trust &amp; Progressive Retrieval</h3>
+    <ol start="13">
+      <li>D. Tao, S. Di, Z. Chen, and F. Cappello. Z-checker: A framework for assessing lossy compression of scientific data. <span class="venue">IJHPCA, 33(2):285&ndash;303, 2017.</span></li>
+      <li>D. Laney, S. Langer, C. Weber, P. Lindstrom, and A. Wegener. Assessing the effects of data compression in simulations using physically motivated metrics. <span class="venue">IEEE/ACM SC, 76:1&ndash;12, 2013.</span></li>
+      <li>A. Baker, D. Hammerling, S. Mickelson, H. Xu, M. Stolpe, et al. Evaluating lossy data compression on climate simulation data within a large ensemble. <span class="venue">Geoscientific Model Development, 9(12):4381&ndash;4403, 2016.</span></li>
+      <li>V. Magri and P. Lindstrom. A general framework for progressive data compression and retrieval. <span class="venue">IEEE TVCG, 30(1):1358&ndash;1368, 2024.</span></li>
+      <li>D. Hoang, H. Bhatia, P. Lindstrom, and V. Pascucci. Progressive tree-based compression of large-scale particle data. <span class="venue">IEEE TVCG, 30(7):4321&ndash;4338, 2023.</span></li>
+    </ol>
+
+    <h3>Use Cases, Infrastructure &amp; Tooling</h3>
+    <ol start="18">
+      <li>ACM Computing Surveys Paper: Taxonomy of lossy compression and error bounds for scientific data. <span class="venue">ACM Computing Surveys, 2024.</span></li>
+      <li>F. Cappello et al. Use cases of lossy compression for floating-point data in scientific data sets. <span class="venue">IJHPCA, 33(6):1201&ndash;1220, 2019.</span></li>
+      <li>R. Underwood, V. Malvoso, S. Di, J. C. Calhoun, A. Apon, and F. Cappello. Productive and performant generic lossy data compression with LibPressio. <span class="venue">DRBSD-7, 2021.</span></li>
+      <li>R. Underwood, J. C. Calhoun, S. Di, A. Apon, and F. Cappello. OptZConfig: Efficient parallel optimization of lossy compression configuration. <span class="venue">IEEE TPDS, 33(12):3541&ndash;3555, 2022.</span></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<!-- Lightbox Modal -->
+<div class="lightbox-overlay" id="lightboxModal" onclick="closeLightbox(event)">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightboxDirect()">&times;</button>
+    <img id="lightboxImg" src="" alt="Enlarged figure view">
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="wrap">
+  <div class="foot-mark">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+    Lossy Compression for Scientific Data
+  </div>
+  <p>Half-day tutorial at <a href="https://ieeevis.org/year/2026/info/program/tutorials" target="_blank" rel="noopener">IEEE VIS 2026</a>, Thursday, November 12, 08:00&ndash;11:30 EST, Hall St. George A&ndash;B, Boston, Massachusetts.</p>
+  <p>Earlier editions presented at SC17&ndash;SC25, ISC17&ndash;ISC22, EuroPar18, and the ECP Annual Meeting. This edition is substantially revised for IEEE VIS with visualization-specific theory, feature preservation, and interactive demonstrations.</p>
+  <p>Inquiries about the tutorial: contact any of the organizers listed above or <a href="mailto:guo.2154@osu.edu">guo.2154@osu.edu</a>.</p>
+</footer>
+
+<script>
+
+// Lightbox Modal
+function openLightbox(src, alt) {
+  const modal = document.getElementById('lightboxModal');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
+  img.alt = alt || '';
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e.target.id === 'lightboxModal') {
+    closeLightboxDirect();
+  }
+}
+
+function closeLightboxDirect() {
+  const modal = document.getElementById('lightboxModal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightboxDirect();
+});
+
+// Theme Toggle (Light / Dark)
+const themeBtn = document.getElementById('themeToggle');
+const htmlEl = document.documentElement;
+
+function getStoredTheme() {
+  return localStorage.getItem('vis26_theme') || 'light';
+}
+
+function setTheme(theme) {
+  htmlEl.setAttribute('data-theme', theme);
+  localStorage.setItem('vis26_theme', theme);
+  updateThemeIcon(theme);
+}
+
+function updateThemeIcon(theme) {
+  if (theme === 'dark') {
+    themeBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+    themeBtn.title = 'Switch to Light Mode';
+  } else {
+    themeBtn.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+    themeBtn.title = 'Switch to Dark Mode';
+  }
+}
+
+themeBtn.addEventListener('click', () => {
+  const current = htmlEl.getAttribute('data-theme') || 'light';
+  const next = current === 'dark' ? 'light' : 'dark';
+  setTheme(next);
+});
+
+// Initialize theme
+setTheme(getStoredTheme());
+</script>
+
+</body>
+</html>
