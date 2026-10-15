@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Topology-Preserving INR Simulator (with N & K & i18n)</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+    <style>
+        body { font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f9; color: #333; }
+        .header { text-align: center; margin-bottom: 10px; position: relative; }
+        .lang-btn-container { position: absolute; top: 0; right: 20px; }
+        #lang-btn { background-color: #eee; color: #333; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer; }
+        #lang-btn:hover { background-color: #ddd; }
+        .controls { display: flex; justify-content: center; gap: 30px; margin-bottom: 10px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); align-items: center; flex-wrap: wrap;}
+        .control-group { display: flex; flex-direction: column; width: 220px; }
+        label { font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #555; }
+        .val-display { color: #0078D7; font-size: 14px; float: right; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .btn-group { display: flex; gap: 10px; }
+        button.action-btn { padding: 10px 15px; font-size: 13px; font-weight: bold; color: white; background-color: #0078D7; border: none; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        button.action-btn:hover { background-color: #005a9e; }
+        #reset-btn { background-color: #797775; }
+        #reset-btn:hover { background-color: #514f4e; }
+        .metrics { font-family: monospace; font-size: 14px; color: #d13438; font-weight: bold; width: 100%; text-align: center; margin-top: 10px;}
+        #plot { width: 100%; height: 65vh; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="lang-btn-container">
+            <button id="lang-btn">中文 / English</button>
+        </div>
+        <h2 id="ui-title">Topology-Preserving INR Real-time Training</h2>
+        <p id="ui-subtitle" style="font-size: 14px; color: #666; margin-top: -10px;">Dynamically adjust N and k, observing how the underlying topological skeleton affects the neural network's fitted surface via weighted MSE constraints.</p>
+    </div>
+    
+    <div class="controls">
+        <div class="control-group">
+            <label><span id="ui-n-label">Number of Samples (N): </span><span class="val-display" id="n-val">400</span></label>
+            <input type="range" id="n-slider" min="50" max="2000" step="50" value="400">
+        </div>
+        <div class="control-group">
+            <label><span id="ui-k-label">K-NN Parameter (k): </span><span class="val-display" id="k-val">15</span></label>
+            <input type="range" id="k-slider" min="3" max="50" step="1" value="15">
+        </div>
+        <div class="control-group">
+            <label><span id="ui-lambda-label">Topo Anchor Weight (λ): </span><span class="val-display" id="lambda-val">15</span></label>
+            <input type="range" id="lambda-slider" min="1" max="100" step="1" value="15">
+        </div>
+        <div class="btn-group">
+            <button id="train-btn" class="action-btn">Start Training</button>
+            <button id="reset-btn" class="action-btn">Reset Model</button>
+        </div>
+        <div class="metrics" id="status-text">Status: Ready | Epoch: 0 | Loss: -</div>
+    </div>
+    
+    <div id="plot"></div>
+
+    <script>
+        // --- i18n Dictionary ---
+        const i18n = {
+            en: {
+                title: "Topology-Preserving INR Real-time Training",
+                subtitle: "Dynamically adjust N and k, observing how the underlying topological skeleton affects the neural network's fitted surface via weighted MSE constraints.",
+                n_label: "Number of Samples (N): ",
+                k_label: "K-NN Parameter (k): ",
+                lambda_label: "Topo Anchor Weight (λ): ",
+                train_start: "Start Training",
+                train_pause: "Pause Training",
+                train_resume: "Resume Training",
+                reset_model: "Reset Model",
+                status_ready: "Status: Ready",
+                status_training: "Status: Training",
+                status_paused: "Status: Paused",
+                status_reset: "Status: Reset",
+                status_updating: "Status: Topology updated, adapting to new structure...",
+                trace_surface: "INR Continuous Surface",
+                trace_samples: "Sparse Samples",
+                trace_maxima: "Maxima",
+                trace_edges: "Extremum Edges",
+                trace_saddles: "Saddles"
+            },
+            zh: {
+                title: "拓扑保持隐式神经表示 (Topology-Preserving INR) 实时训练",
+                subtitle: "动态调节 N 和 k，实时观察底层拓扑骨架的变化如何通过加权 MSE 约束影响神经网络的拟合曲面。",
+                n_label: "采样点数目 (N): ",
+                k_label: "K-NN 参数 (k): ",
+                lambda_label: "拓扑锚点权重 (λ): ",
+                train_start: "开始训练",
+                train_pause: "暂停训练",
+                train_resume: "继续训练",
+                reset_model: "重置模型",
+                status_ready: "状态: 待命",
+                status_training: "状态: 训练中",
+                status_paused: "状态: 已暂停",
+                status_reset: "状态: 已重置",
+                status_updating: "状态: 拓扑已更新，正在适应新结构...",
+                trace_surface: "INR 连续曲面",
+                trace_samples: "稀疏采样点",
+                trace_maxima: "极大值",
+                trace_edges: "极值图边",
+                trace_saddles: "鞍点"
+            }
+        };
+
+        let currentLang = 'en';
+
+        // 1. 全局数据与超集生成
+        const MAX_N = 2000;
+        const ptsAll = [];
+        for(let i=0; i<MAX_N; i++) {
+            let x = Math.random() * 8 - 4;
+            let y = Math.random() * 8 - 4;
+            let z = 2 * Math.sin(x) * Math.cos(y) - 0.05 * (x*x + y*y) + (Math.random() - 0.5) * 0.1;
+            ptsAll.push({x: x, y: y, z: z, id: i});
+        }
+
+        let currentPts = [];
+        let criticalIndices = new Set();
+        let isInitialized = false;
+
+        // 2. 预处理用于推理的 Grid 数据
+        const gridRes = 30;
+        const gridX = [], gridY = [];
+        const gridFlat = [];
+        for(let i=0; i<gridRes; i++) {
+            let rowX = [], rowY = [];
+            for(let j=0; j<gridRes; j++) {
+                let px = -4 + 8 * (j / (gridRes - 1));
+                let py = -4 + 8 * (i / (gridRes - 1));
+                rowX.push(px);
+                rowY.push(py);
+                gridFlat.push([px, py]);
+            }
+            gridX.push(rowX);
+            gridY.push(rowY);
+        }
+        let gridZ = Array(gridRes).fill(0).map(() => Array(gridRes).fill(-4)); 
+        const gridTensor = tf.tensor2d(gridFlat);
+
+        // 3. TF.js 变量
+        let model = null;
+        let isTraining = false;
+        let epoch = 0;
+        let animId;
+        let xs = null, ys = null, sampleWeights = null;
+        const optimizer = tf.train.adam(0.005);
+
+        function createModel() {
+            if(model) model.dispose();
+            const m = tf.sequential();
+            m.add(tf.layers.dense({units: 32, activation: 'tanh', inputShape: [2]}));
+            m.add(tf.layers.dense({units: 32, activation: 'tanh'}));
+            m.add(tf.layers.dense({units: 32, activation: 'tanh'}));
+            m.add(tf.layers.dense({units: 1}));
+            epoch = 0;
+            gridZ = Array(gridRes).fill(0).map(() => Array(gridRes).fill(-4));
+            return m;
+        }
+
+        function updateWeights() {
+            const topoWeight = parseFloat(document.getElementById('lambda-slider').value);
+            document.getElementById('lambda-val').innerText = topoWeight;
+            if(sampleWeights) sampleWeights.dispose();
+            const weightsArr = currentPts.map((p, idx) => criticalIndices.has(idx) ? topoWeight : 1.0);
+            sampleWeights = tf.tensor1d(weightsArr);
+        }
+
+        function updateTopologyAndTensors() {
+            const N = parseInt(document.getElementById('n-slider').value);
+            const K = parseInt(document.getElementById('k-slider').value);
+            document.getElementById('n-val').innerText = N;
+            document.getElementById('k-val').innerText = K;
+
+            currentPts = ptsAll.slice(0, N);
+
+            const neighbors = [];
+            for(let i=0; i<N; i++) {
+                let dists = [];
+                for(let j=0; j<N; j++) {
+                    if(i === j) continue;
+                    let dx = currentPts[i].x - currentPts[j].x, dy = currentPts[i].y - currentPts[j].y;
+                    dists.push({id: j, d2: dx*dx + dy*dy});
+                }
+                dists.sort((a, b) => a.d2 - b.d2);
+                neighbors.push(dists.slice(0, K).map(d => d.id));
+            }
+
+            const dest = new Array(N).fill(0);
+            for(let i=0; i<N; i++) {
+                let maxZ = currentPts[i].z, bestDest = i;
+                for(let nbr of neighbors[i]) {
+                    if(currentPts[nbr].z > maxZ) { maxZ = currentPts[nbr].z; bestDest = nbr; }
+                }
+                dest[i] = bestDest;
+            }
+
+            const roots = new Array(N).fill(0);
+            const rootCounts = {};
+            for(let i=0; i<N; i++) {
+                let curr = i, step = 0;
+                while(dest[curr] !== curr && step < N) { curr = dest[curr]; step++; }
+                roots[i] = curr;
+                rootCounts[curr] = (rootCounts[curr] || 0) + 1;
+            }
+            const validRoots = new Set();
+            for(let r in rootCounts) { if(rootCounts[r] > 2) validRoots.add(parseInt(r)); }
+
+            const saddles = {};
+            criticalIndices.clear();
+            validRoots.forEach(r => criticalIndices.add(r)); 
+            
+            for(let i=0; i<N; i++) {
+                let r_i = roots[i];
+                if(!validRoots.has(r_i)) continue;
+                for(let nbr of neighbors[i]) {
+                    let r_n = roots[nbr];
+                    if(!validRoots.has(r_n)) continue;
+                    if(r_i !== r_n) {
+                        let edge_val = Math.min(currentPts[i].z, currentPts[nbr].z);
+                        let pairKey = r_i < r_n ? r_i + "_" + r_n : r_n + "_" + r_i;
+                        if(!saddles[pairKey] || edge_val > saddles[pairKey].val) {
+                            saddles[pairKey] = {val: edge_val, n1: i, n2: nbr, r1: r_i, r2: r_n};
+                        }
+                    }
+                }
+            }
+            
+            Object.values(saddles).forEach(s => {
+                criticalIndices.add(s.n1);
+                criticalIndices.add(s.n2);
+            });
+
+            const mx=[], my=[], mz=[];
+            validRoots.forEach(r => { mx.push(currentPts[r].x); my.push(currentPts[r].y); mz.push(currentPts[r].z); });
+            
+            const ex=[], ey=[], ez=[], sx=[], sy=[], sz=[];
+            Object.values(saddles).forEach(s => {
+                let p1 = currentPts[s.n1], p2 = currentPts[s.n2], r1 = currentPts[s.r1], r2 = currentPts[s.r2];
+                ex.push(r1.x, p1.x, p2.x, r2.x, null); ey.push(r1.y, p1.y, p2.y, r2.y, null); ez.push(r1.z, p1.z, p2.z, r2.z, null);
+                sx.push((p1.x + p2.x)/2); sy.push((p1.y + p2.y)/2); sz.push((p1.z + p2.z)/2);
+            });
+
+            const t = i18n[currentLang];
+            const scatter = { x: currentPts.map(p=>p.x), y: currentPts.map(p=>p.y), z: currentPts.map(p=>p.z), mode: 'markers', type: 'scatter3d', marker: { size: 3, color: 'rgba(100,100,100,0.5)' }, name: t.trace_samples };
+            const maximaTrace = { x: mx, y: my, z: mz, mode: 'markers', type: 'scatter3d', marker: { size: 10, symbol: 'diamond', color: 'red' }, name: t.trace_maxima };
+            const edgesTrace = { x: ex, y: ey, z: ez, mode: 'lines', type: 'scatter3d', line: { color: 'black', width: 4 }, name: t.trace_edges };
+            const saddlesTrace = { x: sx, y: sy, z: sz, mode: 'markers', type: 'scatter3d', marker: { size: 6, symbol: 'square', color: '#00ff00' }, name: t.trace_saddles };
+
+            window.staticTraces = [scatter, maximaTrace, edgesTrace, saddlesTrace];
+            renderPlot(false);
+
+            if(xs) xs.dispose();
+            if(ys) ys.dispose();
+            xs = tf.tensor2d(currentPts.map(p => [p.x, p.y]));
+            ys = tf.tensor2d(currentPts.map(p => [p.z]));
+            updateWeights();
+        }
+
+        function renderPlot(updateSurfaceOnly = false) {
+            const t = i18n[currentLang];
+            const surfaceTrace = {
+                x: gridX, y: gridY, z: gridZ,
+                type: 'surface',
+                colorscale: 'Viridis',
+                opacity: 0.85,
+                name: t.trace_surface,
+                showscale: false
+            };
+
+            if(updateSurfaceOnly && isInitialized) {
+                window.layout.scene.camera = document.getElementById('plot').layout.scene.camera;
+                Plotly.react('plot', [surfaceTrace, ...window.staticTraces], window.layout);
+                return;
+            }
+
+            if(!window.layout) {
+                window.layout = {
+                    margin: {l: 0, r: 0, b: 0, t: 0},
+                    scene: { 
+                        xaxis: {range: [-4, 4]}, 
+                        yaxis: {range: [-4, 4]}, 
+                        zaxis: {range: [-4, 4]},
+                        camera: {eye: {x: 1.5, y: 1.5, z: 1.2}}
+                    },
+                    legend: {x: 0, y: 1, bgcolor: 'rgba(255,255,255,0.7)'}
+                };
+            } else if (isInitialized) {
+                window.layout.scene.camera = document.getElementById('plot').layout.scene.camera;
+            }
+
+            Plotly.react('plot', [surfaceTrace, ...window.staticTraces], window.layout).then(() => {
+                isInitialized = true;
+            });
+        }
+
+        async function trainLoop() {
+            if(!isTraining) return;
+
+            for(let i=0; i<10; i++) {
+                optimizer.minimize(() => {
+                    const preds = model.predict(xs);
+                    return tf.losses.meanSquaredError(ys, preds, sampleWeights);
+                });
+                epoch++;
+            }
+
+            const lossVal = tf.tidy(() => tf.losses.meanSquaredError(ys, model.predict(xs), sampleWeights).dataSync()[0]);
+            document.getElementById('status-text').innerText = `${i18n[currentLang].status_training} | Epoch: ${epoch} | Loss: ${lossVal.toFixed(4)}`;
+
+            const zPred = model.predict(gridTensor).dataSync();
+            let newGridZ = [];
+            let idx = 0;
+            for(let i=0; i<gridRes; i++) {
+                let row = [];
+                for(let j=0; j<gridRes; j++) {
+                    row.push(zPred[idx++]);
+                }
+                newGridZ.push(row);
+            }
+            gridZ = newGridZ;
+
+            renderPlot(true);
+            animId = requestAnimationFrame(trainLoop);
+        }
+
+        // Language toggle logic
+        function updateLanguage() {
+            const t = i18n[currentLang];
+            document.getElementById('ui-title').innerText = t.title;
+            document.getElementById('ui-subtitle').innerText = t.subtitle;
+            document.getElementById('ui-n-label').innerText = t.n_label;
+            document.getElementById('ui-k-label').innerText = t.k_label;
+            document.getElementById('ui-lambda-label').innerText = t.lambda_label;
+            
+            const trainBtn = document.getElementById('train-btn');
+            if(isTraining) trainBtn.innerText = t.train_pause;
+            else if(epoch > 0) trainBtn.innerText = t.train_resume;
+            else trainBtn.innerText = t.train_start;
+            
+            document.getElementById('reset-btn').innerText = t.reset_model;
+            
+            let statusPrefix = t.status_ready;
+            if(isTraining) statusPrefix = t.status_training;
+            else if(epoch > 0) statusPrefix = t.status_paused;
+            else if(epoch === 0 && !isTraining) statusPrefix = t.status_ready; // Or reset
+            
+            let statusText = document.getElementById('status-text').innerText;
+            if(statusText.includes("Epoch:")) {
+                const parts = statusText.split("|");
+                document.getElementById('status-text').innerText = `${statusPrefix} |${parts[1]}|${parts[2]}`;
+            } else {
+                document.getElementById('status-text').innerText = `${statusPrefix} | Epoch: 0 | Loss: -`;
+            }
+
+            // Update Plotly Trace names
+            if (window.staticTraces) {
+                window.staticTraces[0].name = t.trace_samples;
+                window.staticTraces[1].name = t.trace_maxima;
+                window.staticTraces[2].name = t.trace_edges;
+                window.staticTraces[3].name = t.trace_saddles;
+                renderPlot(false);
+            }
+        }
+
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            updateLanguage();
+        });
+
+        document.getElementById('train-btn').addEventListener('click', () => {
+            const t = i18n[currentLang];
+            if(!isTraining) {
+                if(!model) model = createModel();
+                isTraining = true;
+                document.getElementById('train-btn').innerText = t.train_pause;
+                document.getElementById('train-btn').style.backgroundColor = "#d13438";
+                trainLoop();
+            } else {
+                isTraining = false;
+                document.getElementById('train-btn').innerText = t.train_resume;
+                document.getElementById('train-btn').style.backgroundColor = "#0078D7";
+                cancelAnimationFrame(animId);
+                const currentStatus = document.getElementById('status-text').innerText;
+                const parts = currentStatus.split("|");
+                document.getElementById('status-text').innerText = `${t.status_paused} |${parts[1]}|${parts[2]}`;
+            }
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            const t = i18n[currentLang];
+            model = createModel();
+            renderPlot(false);
+            document.getElementById('status-text').innerText = `${t.status_reset} | Epoch: 0 | Loss: -`;
+            if(!isTraining) {
+                document.getElementById('train-btn').innerText = t.train_start;
+            }
+        });
+
+        let timeout;
+        function onParamsChange() {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                updateTopologyAndTensors();
+                if(isTraining) {
+                    const t = i18n[currentLang];
+                    document.getElementById('status-text').innerText = `${t.status_updating} | Epoch: ${epoch}`;
+                }
+            }, 50);
+        }
+
+        document.getElementById('n-slider').addEventListener('input', onParamsChange);
+        document.getElementById('k-slider').addEventListener('input', onParamsChange);
+        document.getElementById('lambda-slider').addEventListener('input', updateWeights);
+
+        // Initial setup
+        updateLanguage(); // Apply English default on load
+        updateTopologyAndTensors();
+        model = createModel();
+
+    </script>
+</body>
+</html>
