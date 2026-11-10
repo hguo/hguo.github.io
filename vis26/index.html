@@ -432,6 +432,28 @@ h3{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--in
 .who-hg{background:var(--amber-soft);color:var(--amber);border-color:color-mix(in srgb, var(--amber) 30%, transparent)}
 .who-all{background:var(--surface-3);color:var(--ink-2);border-color:var(--line)}
 
+.slot-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.slide-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:12px;font-weight:600;
+  padding:4px 10px;border-radius:var(--radius-sm);
+  background:var(--accent-soft);color:var(--accent-deep);
+  border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  text-decoration:none;transition:all 0.15s ease;
+}
+[data-theme="dark"] .slide-pill{color:var(--accent)}
+.slide-pill:hover{
+  background:var(--accent);color:var(--btn-fg);border-color:var(--accent);
+}
+.slide-pill svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;flex-shrink:0}
+.slide-pill.demo-pill{
+  background:var(--emerald-soft);color:var(--emerald);
+  border-color:color-mix(in srgb, var(--emerald) 30%, transparent);
+}
+.slide-pill.demo-pill:hover{
+  background:var(--emerald);color:var(--btn-fg);border-color:var(--emerald);
+}
+
 @media (max-width:680px){
   .slot{grid-template-columns:1fr auto;gap:4px 12px}
   .slot-t{grid-column:1/-1;font-size:12.5px;letter-spacing:.04em}
@@ -586,6 +608,7 @@ footer p + p{margin-top:12px}
       <a class="link" href="#schedule">Schedule</a>
       <a class="link" href="#pipeline">Pipeline</a>
       <a class="link" href="#topics">Topics</a>
+      <a class="link" href="#materials">Hands-On</a>
       <a class="link" href="#speakers">Speakers</a>
       <a class="link" href="#software">Software</a>
       <a class="link" href="#reading">Reading</a>
@@ -730,43 +753,48 @@ footer p + p{margin-top:12px}
 
   <div class="block">
     <div class="block-head">
-      <h3>Session I &mdash; Fundamentals &amp; Leading Compressors</h3>
+      <h3>Session I &mdash; Fundamentals, Error Assessment &amp; Feature Preservation</h3>
       <span class="block-time">08:00 &ndash; 09:30</span>
     </div>
     <div class="slot">
-      <span class="slot-t">08:00 &ndash; 08:15</span>
+      <span class="slot-t">08:00 &ndash; 08:05</span>
       <div class="slot-title">
-        Opening and Motivation
-        <span class="note">The data deluge in scientific simulations, experiments, and AI. Use cases, storage footprints, I/O bottlenecks, and why scientific data needs specialized lossy reduction.</span>
+        Opening
+        <span class="note">Welcome, tutorial overview, and structure of the half-day program.</span>
       </div>
       <div class="slot-who"><span class="who who-fc" title="Franck Cappello">FC</span></div>
     </div>
     <div class="slot">
-      <span class="slot-t">08:15 &ndash; 08:45</span>
+      <span class="slot-t">08:05 &ndash; 08:25</span>
       <div class="slot-title">
-        How Lossy Compression Works
-        <span class="note">The three fundamental stages: decorrelation/conditioning (prediction, transforms, tensor decomposition), reduction (quantization, thresholding), and entropy coding. Trade-offs and downstream implications.</span>
+        Section 1: Motivation and Use Cases
+        <span class="note">The data deluge in scientific simulations, experiments, and AI. Use cases beyond visualization (networking, storage, in-memory compression), Shannon entropy, and why scientific data needs specialized lossy reduction.</span>
+      </div>
+      <div class="slot-who"><span class="who who-fc" title="Franck Cappello">FC</span></div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">08:25 &ndash; 08:55</span>
+      <div class="slot-title">
+        Section 2: How Lossy Compression Works + MGARD and SPERR
+        <span class="note">The three fundamental stages: decorrelation/conditioning (prediction, transforms, tensor decomposition), reduction (quantization, thresholding), and entropy coding. Progressive retrieval, preservation of QoIs, and deep dive into MGARD and SPERR.</span>
       </div>
       <div class="slot-who"><span class="who who-pl" title="Peter Lindstrom">PL</span></div>
     </div>
     <div class="slot">
-      <span class="slot-t">08:45 &ndash; 09:15</span>
+      <span class="slot-t">08:55 &ndash; 09:10</span>
       <div class="slot-title">
-        State-of-the-Art Compressors: SZ, ZFP, MGARD, SPERR
-        <span class="note">Deep dive into leading generic compressors: SZ prediction models, ZFP block-based orthogonal transforms, MGARD multigrid wavelet decomposition, and SPERR rate-distortion optimizations.</span>
+        Section 3: Assessing Compression Error
+        <span class="note">Three levels of error assessment: standard quality assessment metrics (PSNR, SSIM, autocorrelation), visualization-oriented metrics (topology, geometry, spectra), and application-specific metrics (e.g., halo mass distribution).</span>
       </div>
-      <div class="slot-who">
-        <span class="who who-sd" title="Sheng Di">SD</span>
-        <span class="who who-pl" title="Peter Lindstrom">PL</span>
-      </div>
+      <div class="slot-who"><span class="who who-fc" title="Franck Cappello">FC</span></div>
     </div>
     <div class="slot">
-      <span class="slot-t">09:15 &ndash; 09:30</span>
+      <span class="slot-t">09:10 &ndash; 09:30</span>
       <div class="slot-title">
-        Live Demonstration of Compressors
-        <span class="note">Live compression of reference scientific datasets (Nyx cosmology, Hurricane Isabel, Miranda turbulent mixing) across multiple compressors and parameter spaces.</span>
+        Section 4: Feature &amp; Topology Preserving Compression
+        <span class="note">Distortions in volume rendering, isosurfaces, and streamlines. Novel feature-preserving compressors: TopoSZ (contour trees), MSz &amp; pMSz (Morse-Smale segmentations), vector-field critical points, and spectrum-preserving FFCz.</span>
       </div>
-      <div class="slot-who"><span class="who who-ru" title="Robert Underwood">RU</span></div>
+      <div class="slot-who"><span class="who who-hg" title="Hanqi Guo">HG</span></div>
     </div>
   </div>
 
@@ -778,43 +806,59 @@ footer p + p{margin-top:12px}
 
   <div class="block" style="margin-top:22px">
     <div class="block-head">
-      <h3>Session II &mdash; Compression for Visualization &amp; Customization</h3>
+      <h3>Session II &mdash; State-of-the-Art Compressors, Neural Representations &amp; Live Demos</h3>
       <span class="block-time">10:00 &ndash; 11:30</span>
     </div>
     <div class="slot">
-      <span class="slot-t">10:00 &ndash; 10:35</span>
+      <span class="slot-t">10:00 &ndash; 10:20</span>
       <div class="slot-title">
-        Impact on Visualization Quality and Feature Preservation
-        <span class="note">Distortions in volume rendering, isosurfaces, and streamlines. Novel feature-preserving compressors: TopoSZ (contour trees), MSz &amp; pMSz (Morse-Smale segmentations), vector-field critical points, and spectrum-preserving FFCz.</span>
+        Section 5a: State-of-the-Art Compressors &mdash; ZFP &amp; Hands-On
+        <span class="note">Deep dive into ZFP block-based orthogonal transforms, fixed-rate/precision/accuracy modes, spatially adaptive precision, and hands-on usage.</span>
+      </div>
+      <div class="slot-who"><span class="who who-pl" title="Peter Lindstrom">PL</span></div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">10:20 &ndash; 10:40</span>
+      <div class="slot-title">
+        Section 5b: State-of-the-Art Compressors &mdash; SZ &amp; QCAT Hands-On
+        <span class="note">Deep dive into SZ modular prediction-based error-bounded compression framework and hands-on analysis with QCAT.</span>
+      </div>
+      <div class="slot-who"><span class="who who-sd" title="Sheng Di">SD</span></div>
+    </div>
+    <div class="slot">
+      <span class="slot-t">10:40 &ndash; 11:00</span>
+      <div class="slot-title">
+        Section 6: Neural Representation of Scientific Data vs. Compressors
+        <span class="note">Clarifying the differences between AI-based implicit neural representations (INRs, STNet, tezip) and error-bounded lossy compressors for scientific data.</span>
       </div>
       <div class="slot-who"><span class="who who-hg" title="Hanqi Guo">HG</span></div>
     </div>
     <div class="slot">
-      <span class="slot-t">10:35 &ndash; 10:55</span>
+      <span class="slot-t">11:00 &ndash; 11:15</span>
       <div class="slot-title">
-        Error Assessment, Trust, and Progressive Retrieval
-        <span class="note">Beyond PSNR and SSIM: error autocorrelation, derivative preservation, and physically motivated metrics. Progressive compression and level-of-detail rendering for interactive exploration.</span>
+        Section 7a: Live Demo &mdash; Useful Tools &amp; LibPressio
+        <span class="note">Unifying 30+ compressors with LibPressio, automated configuration tuning with OptZConfig, and live compression across reference scientific datasets.</span>
       </div>
-      <div class="slot-who">
-        <span class="who who-fc" title="Franck Cappello">FC</span>
-        <span class="who who-pl" title="Peter Lindstrom">PL</span>
-      </div>
+      <div class="slot-who"><span class="who who-ru" title="Robert Underwood">RU</span></div>
     </div>
     <div class="slot">
-      <span class="slot-t">10:55 &ndash; 11:15</span>
+      <span class="slot-t">11:15 &ndash; 11:25</span>
       <div class="slot-title">
-        LibPressio and the FZ Customization Framework
-        <span class="note">Unifying 30+ compressors with LibPressio, automated configuration tuning with OptZConfig, and synthesizing domain-specialized compressors using the FZ cyberinfrastructure framework.</span>
+        Section 7b: Live Demo &mdash; FZ-VIS &amp; ParaView Visualization
+        <span class="note">Interactive exploration and visual comparison of compressed scientific datasets using the FZ-VIS web environment and ParaView.</span>
+        <div class="slot-links">
+          <a class="slide-pill demo-pill" href="https://go.osu.edu/fzvis" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            Live Demo: go.osu.edu/fzvis (Passcode upon request)
+          </a>
+        </div>
       </div>
-      <div class="slot-who">
-        <span class="who who-ru" title="Robert Underwood">RU</span>
-        <span class="who who-hg" title="Hanqi Guo">HG</span>
-      </div>
+      <div class="slot-who"><span class="who who-hg" title="Hanqi Guo">HG</span></div>
     </div>
     <div class="slot">
-      <span class="slot-t">11:15 &ndash; 11:30</span>
+      <span class="slot-t">11:25 &ndash; 11:30</span>
       <div class="slot-title">
-        Open Discussion, Hands-On Q&amp;A, and Closing Remarks
+        Closing Remarks, Q&amp;A &amp; Discussion
         <span class="note">Interactive discussion with all presenters; feedback on attendee workflows, data reduction questions, and next-generation research opportunities.</span>
       </div>
       <div class="slot-who"><span class="who who-all">All Presenters</span></div>
@@ -919,9 +963,9 @@ footer p + p{margin-top:12px}
 
     <!-- Topic 6 -->
     <div class="topic" style="border-color:color-mix(in srgb, var(--purple) 50%, var(--line))">
-      <span class="topic-n" style="color:var(--purple)">TOPIC 06 &middot; FRAMEWORK</span>
-      <h3>Customizing with the FZ framework</h3>
-      <p>Generic compressors are one-size-fits-all and leave significant performance and fidelity on the table. The FZ cyberinfrastructure framework empowers users to synthesize customized compressors for specific scientific domains and visualization pipelines, achieving 2&times;&ndash;17&times; higher compression ratios with verified feature fidelity.</p>
+      <span class="topic-n" style="color:var(--purple)">TOPIC 06 &middot; AI &amp; CUSTOMIZATION</span>
+      <h3>Neural representations &amp; the FZ framework</h3>
+      <p>Comparing AI-based implicit neural representations (INRs, STNet, tezip) with error-bounded lossy compressors, and synthesizing domain-specialized compressors using the <strong>FZ cyberinfrastructure framework</strong> and <strong>FZ-VIS</strong> for interactive visual exploration.</p>
     </div>
   </div>
 </section>
@@ -941,10 +985,11 @@ footer p + p{margin-top:12px}
     </div>
 
     <div class="panel">
-      <h3>Hands-on environment</h3>
+      <h3>Hands-on environment &amp; live server</h3>
       <ul>
-        <li><strong>Pre-built Docker container:</strong> Pre-configured with SZ3, ZFP, MGARD, SPERR, TTHRESH, LibPressio, QCAT, and Python/Jupyter bindings.</li>
-        <li><strong>Benchmark Datasets:</strong> Real-world scientific data from <strong>SDRBench</strong>, spanning cosmology (Nyx, HACC), climate (Hurricane, CESM), combustion (S3D), and molecular dynamics.</li>
+        <li><strong>FZ &amp; FZ-VIS Interactive Server:</strong> Access the live container environment at <a href="https://go.osu.edu/fzvis" target="_blank" rel="noopener"><strong>https://go.osu.edu/fzvis</strong></a> (passcode available upon request).</li>
+        <li><strong>Pre-built Docker container:</strong> Pre-configured with SZ3, ZFP, MGARD, SPERR, TTHRESH, LibPressio, QCAT, FZ, and Python/Jupyter bindings.</li>
+        <li><strong>ParaView-Ready Datasets:</strong> Prepared scientific benchmark datasets from <strong>SDRBench</strong> ready to be opened directly in ParaView for visual comparison.</li>
         <li><strong>Interactive Exercises:</strong> Compare rate-distortion curves, extract isosurfaces on compressed vs. uncompressed fields, and test topology preservation in real time.</li>
       </ul>
     </div>
